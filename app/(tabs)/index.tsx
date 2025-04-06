@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import Feather from '@expo/vector-icons/Feather';
 import Swiper from 'react-native-swiper';
+import CityList from '@/components/custom/city-list';
 export default function Tab() {
     const [isSearchVisible, setSearchVisible] = useState(false);
 
@@ -50,24 +51,7 @@ export default function Tab() {
                     </TouchableOpacity>
                 )}
             </View>
-            <FlatList
-                data={data}
-                style={{ flexGrow: 0 }}
-                className="rounded-md bg-gray-200 p-2"
-                renderItem={({ item }: { item: string }) => (
-                    <View
-                        className={`${
-                            item === 'Tokyo' ? 'bg-white shadow-md' : 'bg-inherit'
-                        } px-6 h-10 flex flex-row rounded-lg  justify-center items-center`}
-                    >
-                        <Text className="text-center font-thin text-blue-500">{item}</Text>
-                    </View>
-                )}
-                decelerationRate={'fast'}
-                keyExtractor={(item: string) => item}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false} // Hide scroll indicator
-            />
+            <CityList />
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View>
                     <View className="mt-5">

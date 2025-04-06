@@ -2,9 +2,9 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { Tabs } from 'expo-router';
 
-export default function TabLayout() {
+export default function Layout() {
     return (
-        <Tabs screenOptions={{ tabBarActiveTintColor: 'blue' }}>
+        <Tabs initialRouteName="index" screenOptions={{ tabBarActiveTintColor: 'blue' }}>
             <Tabs.Screen
                 name="index"
                 options={{
