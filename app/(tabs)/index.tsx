@@ -1,74 +1,83 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React, { useState } from 'react';
+import {
+    FlatList,
+    Image,
+    Keyboard,
+    KeyboardAvoidingView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    View,
+} from 'react-native';
+import Feather from '@expo/vector-icons/Feather';
+import Swiper from 'react-native-swiper';
+export default function Tab() {
+    const [isSearchVisible, setSearchVisible] = useState(false);
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+    const data = [
+        'Tokyo',
+        'Osaka',
+        'Kyoto',
+        'Nagasaki',
+        'Hokkaido',
+        'Okinawa',
+        'Fukuoka',
+        'Kumamoto',
+        'Nara',
+        'Kagawa',
+    ];
 
-export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+    return (
+        <View className="flex-1 p-4">
+            <View className="flex-row items-center justify-between mb-5">
+                {!isSearchVisible && (
+                    <View className="flex-row items-center">
+                        <Image source={{ uri: 'https://i.pravatar.cc/50' }} className="w-12 h-12 rounded-full mr-3" />
+                        <Text className="text-lg font-bold text-gray-800">John Doe</Text>
+                    </View>
+                )}
+                {isSearchVisible ? (
+                    <TextInput
+                        onBlur={() => setSearchVisible(false)}
+                        autoFocus={true}
+                        placeholder="Search..."
+                        className="flex-1 bg-gray-200 rounded-md px-4 py-2"
+                    />
+                ) : (
+                    <TouchableOpacity onPress={() => setSearchVisible(true)} className="bg-gray-200 rounded-full p-2">
+                        <Feather name="search" size={24} color="black" />
+                    </TouchableOpacity>
+                )}
+            </View>
+            <FlatList
+                data={data}
+                style={{ flexGrow: 0 }}
+                className="rounded-md bg-gray-200 p-2"
+                renderItem={({ item }: { item: string }) => (
+                    <View
+                        className={`${
+                            item === 'Tokyo' ? 'bg-white shadow-md' : 'bg-inherit'
+                        } px-6 h-10 flex flex-row rounded-lg  justify-center items-center`}
+                    >
+                        <Text className="text-center font-thin text-blue-500">{item}</Text>
+                    </View>
+                )}
+                decelerationRate={'fast'}
+                keyExtractor={(item: string) => item}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false} // Hide scroll indicator
+            />
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+                <View>
+                    <View className="mt-5">
+                        <Text className="text-2xl text-blue-500">Popular Destinations</Text>
+                    </View>
+                    <View className="mt-5">
+                        <Text className="text-blue-500 text-2xl">Popular Cuisines</Text>
+                    </View>
+                </View>
+            </TouchableWithoutFeedback>
+        </View>
+    );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
