@@ -21,7 +21,7 @@ export default function Layout() {
                     headerShown: true,
                     title: t('Cities'),
                     headerTitleAlign: 'center',
-                    headerTitleStyle: { fontSize: 25 },
+                    headerTitleStyle: { fontSize: 25,color:'#4b5563' },
                     tabBarIcon: ({ color }: { color: string }) => <FontAwesome5 size={28} name="city" color={color} />,
                 }}
             />
@@ -31,7 +31,7 @@ export default function Layout() {
                     headerShown: true,
                     title: t('Settings'),
                     headerTitleAlign: 'center',
-                    headerTitleStyle: { fontSize: 25 },
+                    headerTitleStyle: { fontSize: 25 , color:'#4b5563' },
                     tabBarIcon: ({ color }: { color: string }) => (
                         <FontAwesome size={28} name="cog" color={color} />
                     ),
