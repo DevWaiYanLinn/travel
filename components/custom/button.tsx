@@ -10,7 +10,7 @@ export default function Button({
     variant?: string;
 }) {
     const buttonVariant: { [key: string]: string } = {
-        primary: 'bg-blue-500',
+        primary: 'bg-blue-400',
         secondary: 'bg-gray-500',
         danger: 'bg-red-500',
         success: 'bg-green-500',
@@ -21,7 +21,7 @@ export default function Button({
         link: 'bg-transparent',
     };
     const buttonSize = {
-        small: 'text-sm',
+        small: 'text-',
         medium: 'text-base',
         large: 'text-lg',
     };

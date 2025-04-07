@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
+import '@/localization/i18n'; 
+
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {

@@ -1,33 +1,39 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { Tabs } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 export default function Layout() {
+    const { t } = useTranslation();
     return (
-        <Tabs initialRouteName="index" screenOptions={{ tabBarActiveTintColor: 'blue' }}>
+        <Tabs initialRouteName="index" screenOptions={{ tabBarActiveTintColor: '#60a5fa' }}>
             <Tabs.Screen
                 name="index"
                 options={{
                     headerShown: false,
-                    title: 'Home',
+                    title: t('Home'),
                     tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={28} name="home" color={color} />,
                 }}
             />
             <Tabs.Screen
                 name="city"
                 options={{
-                    headerShown: false,
-                    title: 'City',
+                    headerShown: true,
+                    title: t('Cities'),
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: { fontSize: 25 },
                     tabBarIcon: ({ color }: { color: string }) => <FontAwesome5 size={28} name="city" color={color} />,
                 }}
             />
             <Tabs.Screen
                 name="settings"
                 options={{
-                    headerShown: false,
-                    title: 'Settings',
+                    headerShown: true,
+                    title: t('Settings'),
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: { fontSize: 25 },
                     tabBarIcon: ({ color }: { color: string }) => (
-                        <FontAwesome size={28} name="cog" className="text-cyan-500" />
+                        <FontAwesome size={28} name="cog" color={color} />
                     ),
                 }}
             />
