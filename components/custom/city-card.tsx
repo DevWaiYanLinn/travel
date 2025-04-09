@@ -19,7 +19,7 @@ const CityCard = ({
         <View className="bg-white shadow-lg rounded-lg overflow-hidden m-4">
             <Image source={imageUrl} style={{ width: '100%', height: 200 }} resizeMode="cover" />
             <View className="p-4">
-                <Text className="text-2xl font-bold text-gray-600 mb-2">{t(title)}</Text>
+                <Text className="text-2xl font-bold text-gray-600 mb-2">{title}</Text>
                 <Text className="text-md text-gray-600 mb-4">
                     {description.length > 100 ? `${description.substring(0, 100)}...` : description}
                 </Text>

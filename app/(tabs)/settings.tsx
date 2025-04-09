@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View, Text, StyleSheet, Switch } from 'react-native';
+import { View, Text,  Switch } from 'react-native';
 
 export default function Tab() {
     const { t, i18n } = useTranslation();

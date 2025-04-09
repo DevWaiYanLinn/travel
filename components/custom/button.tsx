@@ -20,11 +20,7 @@ export default function Button({
         dark: 'bg-gray-800',
         link: 'bg-transparent',
     };
-    const buttonSize = {
-        small: 'text-',
-        medium: 'text-base',
-        large: 'text-lg',
-    };
+
     return (
         <TouchableOpacity onPress={onPress} className={`${buttonVariant[variant]} rounded-md py-2 px-4 self-start`}>
             {children}

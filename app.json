@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.wyl.jtrave"
     },
     "web": {
       "bundler": "metro",
@@ -45,6 +46,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": "https://jtravel.dev/"
+      },
+      "eas": {
+        "projectId": "ed43cb44-eda2-4213-bf22-5a1e929ea50c"
+      }
     }
   }
 }
