@@ -1,59 +1,48 @@
 {
-  "expo": {
-    "name": "j-travel",
-    "slug": "j-travel",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.wyl.jtrave"
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "server",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": [
-      [
-        "expo-router",
-        {
-          "origin": "https://jtravel.dev/"
+    "expo": {
+        "name": "j-travel",
+        "slug": "j-travel",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/images/icon.png",
+        "scheme": "myapp",
+        "userInterfaceStyle": "automatic",
+        "newArchEnabled": true,
+        "ios": {
+            "supportsTablet": true
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/images/adaptive-icon.png",
+                "backgroundColor": "#ffffff"
+            }
+        },
+        "web": {
+            "bundler": "metro",
+            "output": "server",
+            "favicon": "./assets/images/favicon.png"
+        },
+        "plugins": [
+            [
+                "expo-router",
+                {
+                    "origin": "https://jtravel.dev/"
+                }
+            ],
+            [
+                "expo-localization"
+            ],
+            [
+                "expo-splash-screen",
+                {
+                    "image": "./assets/images/loading.png",
+                    "imageWidth":"100%",
+                    "resizeMode": "stretch"
+                }
+            ]
+        ],
+        "experiments": {
+            "typedRoutes": true
         }
-      ],
-      [
-        "expo-localization"
-      ],
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
-        }
-      ],
-      "expo-localization"
-    ],
-    "experiments": {
-      "typedRoutes": true
-    },
-    "extra": {
-      "router": {
-        "origin": "https://jtravel.dev/"
-      },
-      "eas": {
-        "projectId": "ed43cb44-eda2-4213-bf22-5a1e929ea50c"
-      }
     }
-  }
 }
