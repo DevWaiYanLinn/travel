@@ -2,6 +2,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import Fontisto from '@expo/vector-icons/Fontisto';
 
 export default function Layout() {
     const { t } = useTranslation();
@@ -21,8 +22,18 @@ export default function Layout() {
                     headerShown: true,
                     title: t('Cities'),
                     headerTitleAlign: 'center',
-                    headerTitleStyle: { fontSize: 25,color:'#4b5563' },
+                    headerTitleStyle: { fontSize: 25, color: '#4b5563' },
                     tabBarIcon: ({ color }: { color: string }) => <FontAwesome5 size={28} name="city" color={color} />,
+                }}
+            />
+            <Tabs.Screen
+                name="attraction"
+                options={{
+                    headerShown: true,
+                    title: t('Attractions'),
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: { fontSize: 25, color: '#4b5563' },
+                    tabBarIcon: ({ color }: { color: string }) => <Fontisto name="heart" size={24} color={color} />,
                 }}
             />
             <Tabs.Screen
@@ -31,10 +42,8 @@ export default function Layout() {
                     headerShown: true,
                     title: t('Settings'),
                     headerTitleAlign: 'center',
-                    headerTitleStyle: { fontSize: 25 , color:'#4b5563' },
-                    tabBarIcon: ({ color }: { color: string }) => (
-                        <FontAwesome size={28} name="cog" color={color} />
-                    ),
+                    headerTitleStyle: { fontSize: 25, color: '#4b5563' },
+                    tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={28} name="cog" color={color} />,
                 }}
             />
         </Tabs>

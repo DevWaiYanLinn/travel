@@ -9,13 +9,18 @@
         "userInterfaceStyle": "automatic",
         "newArchEnabled": true,
         "ios": {
-            "supportsTablet": true
+            "supportsTablet": true,
+            "bundleIdentifier": "com.wyl.clover.travel",
+            "infoPlist": {
+                "ITSAppUsesNonExemptEncryption": false
+            }
         },
         "android": {
             "adaptiveIcon": {
                 "foregroundImage": "./assets/images/adaptive-icon.png",
                 "backgroundColor": "#ffffff"
-            }
+            },
+            "package": "com.wyl.clover.travel"
         },
         "web": {
             "bundler": "metro",
@@ -35,14 +40,29 @@
             [
                 "expo-splash-screen",
                 {
-                    "image": "./assets/images/loading.png",
-                    "imageWidth":"100%",
-                    "resizeMode": "stretch"
+                    "image": "./assets/images/splash-icon.png",
+                    "imageWidth": 200,
+                    "resizeMode": "contain",
+                    "backgroundColor": "#5271FF"
                 }
             ]
         ],
         "experiments": {
             "typedRoutes": true
+        },
+        "extra": {
+            "router": {
+                "origin": "https://jtravel.dev/"
+            },
+            "eas": {
+                "projectId": "ed43cb44-eda2-4213-bf22-5a1e929ea50c"
+            }
+        },
+        "runtimeVersion": {
+            "policy": "appVersion"
+        },
+        "updates": {
+            "url": "https://u.expo.dev/ed43cb44-eda2-4213-bf22-5a1e929ea50c"
         }
     }
 }
