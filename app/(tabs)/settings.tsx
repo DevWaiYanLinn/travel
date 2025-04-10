@@ -9,7 +9,7 @@ export default function Tab() {
     return (
         <View className='flex-1 p-3'>
             <View>
-                <Text className='text-xl font-bold'>{t('Language')}</Text>
+                <Text className='text-xl text-gray-500 font-bold'>{t('Language')}</Text>
                 <View className='flex flex-col py-3 px-4 bg-white rounded-md mt-3'>
                     <View className='flex flex-row items-center justify-between gap-3'>
                         <Text className='text-gray-600'>{t('English')}</Text>

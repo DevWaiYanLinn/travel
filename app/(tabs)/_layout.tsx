@@ -29,7 +29,7 @@ export default function Layout() {
             <Tabs.Screen
                 name="attraction"
                 options={{
-                    headerShown: true,
+                    headerShown: false,
                     title: t('Attractions'),
                     headerTitleAlign: 'center',
                     headerTitleStyle: { fontSize: 25, color: '#4b5563' },
