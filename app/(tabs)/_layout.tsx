@@ -1,5 +1,6 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import Fontisto from '@expo/vector-icons/Fontisto';
@@ -19,11 +20,11 @@ export default function Layout() {
             <Tabs.Screen
                 name="city"
                 options={{
-                    headerShown: true,
+                    headerShown: false,
                     title: t('Cities'),
                     headerTitleAlign: 'center',
                     headerTitleStyle: { fontSize: 25, color: '#4b5563' },
-                    tabBarIcon: ({ color }: { color: string }) => <FontAwesome5 size={28} name="city" color={color} />,
+                    tabBarIcon: ({ color }: { color: string }) => <FontAwesome6 size={28} name="tree-city" color={color} />,
                 }}
             />
             <Tabs.Screen
@@ -39,7 +40,7 @@ export default function Layout() {
             <Tabs.Screen
                 name="settings"
                 options={{
-                    headerShown: true,
+                    headerShown: false,
                     title: t('Settings'),
                     headerTitleAlign: 'center',
                     headerTitleStyle: { fontSize: 25, color: '#4b5563' },

@@ -20,7 +20,7 @@ const languageDetectorPlugin = {
                 }
                 //if language was not stored yet, use english
 
-                return callback('en');
+                return callback('jp');
             });
         } catch (error) {
             console.log('Error reading language', error);
