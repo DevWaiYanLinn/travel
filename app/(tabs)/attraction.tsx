@@ -156,7 +156,6 @@ export default function Attraction() {
                             </View>
                         </View>
                     </View>
-
                 </View>
                 <View className='flex-row p-3 flex gap-5  bg-white rounded-lg mt-5'>
                     <View className='relative'>
@@ -231,49 +230,69 @@ export default function Attraction() {
                 </BottomSheetModal>
                 <BottomSheetModal snapPoints={['100%']} ref={commentSheetModalRef} onChange={handleSheetChanges}>
                     <BottomSheetView style={styles.contentContainer} className='p-3'>
-                        <Text className='text-2xl font-bold text-gray-500'>{t('Comments')}</Text>
-                        <View className='mt-5 flex-1 w-full gap-5'>
-                            <View className='w-full flex-row items-start gap-3'>
-                                <View>
-                                    <View className='bg-gray-200 p-1 rounded-full'>
-                                        <Image style={{ width: 30, height: 30 }} className='rounded-full' source={require('@/assets/images/avatar.png')} resizeMode='contain' />
+                        <ScrollView className='flex-1 w-full' showsVerticalScrollIndicator={false}>
+                            <Text className='text-2xl font-bold text-gray-500 text-center'>{t('Comments')}</Text>
+                            <View className='mt-5 flex-1 w-full gap-5'>
+                                <View className='w-full flex-row items-start gap-3'>
+                                    <View>
+                                        <View className='bg-gray-200 p-1 rounded-full'>
+                                            <Image style={{ width: 30, height: 30 }} className='rounded-full' source={require('@/assets/images/avatar.png')} resizeMode='contain' />
+                                        </View>
+                                    </View>
+                                    <View className='flex-1'>
+                                        <View className='flex-row gap-5 items-center'>
+                                            <Text className='text-gray-500 font-bold'>
+                                                {t('John Doe')}
+                                            </Text>
+                                            <Text style={{ fontSize: 10 }} className='text-blue-500 font-semibold'>{t('Today')}</Text>
+                                        </View>
+                                        <View className='bg-gray-100 p-3 rounded-xl mt-2'>
+                                            <Text className='text-gray-500'>
+                                                これはダミーテキストです。文章の内容は意味を持っていませんが、レイアウトやデザインを確認するために使われます。文字のバランスや行間を調整する際に便利です。文章の長さや漢字の割合などをテストできます。見出しや本文のスタイルを確認するのにも適しています。
+                                            </Text>
+                                        </View>
                                     </View>
                                 </View>
-                                <View className='flex-1'>
-                                    <View className='flex-row gap-5 items-center'>
-                                        <Text className='text-gray-500 font-bold'>
-                                            {t('John Doe')}
-                                        </Text>
-                                        <Text style={{ fontSize: 10 }} className='text-blue-500 font-semibold'>{t('Today')}</Text>
+                                <View className='w-full flex-row items-start gap-3'>
+                                    <View>
+                                        <View className='bg-gray-200 p-1 rounded-full'>
+                                            <Image style={{ width: 30, height: 30 }} className='rounded-full' source={require('@/assets/images/avatar.png')} resizeMode='contain' />
+                                        </View>
                                     </View>
-                                    <View className='bg-gray-100 p-3 rounded-xl mt-2'>
-                                        <Text className='text-gray-500'>
-                                            これはダミーテキストです。文章の内容は意味を持っていませんが、レイアウトやデザインを確認するために使われます。文字のバランスや行間を調整する際に便利です。文章の長さや漢字の割合などをテストできます。見出しや本文のスタイルを確認するのにも適しています。
-                                        </Text>
+                                    <View className='flex-1'>
+                                        <View className='flex-row gap-5 items-center'>
+                                            <Text className='text-gray-500 font-bold'>
+                                                {t('Emily')}
+                                            </Text>
+                                            <Text style={{ fontSize: 10 }} className='text-blue-500 font-semibold'>{t('Yesterday')}</Text>
+                                        </View>
+                                        <View className='bg-gray-100 p-3 rounded-xl mt-2'>
+                                            <Text className='text-gray-500'>
+                                                もう少し文章を追加すると、全体の雰囲気をより正確に把握できます。フォントサイズや段落の配置など、細かいデザイン要素を調整するためにご活用ください。
+                                            </Text>
+                                        </View>
+                                    </View>
+                                </View>
+                                <View className='w-full flex-row items-start gap-3'>
+                                    <View>
+                                        <View className='bg-gray-200 p-1 rounded-full'>
+                                            <Image style={{ width: 30, height: 30 }} className='rounded-full' source={require('@/assets/images/avatar.png')} resizeMode='contain' />
+                                        </View>
+                                    </View>
+                                    <View className='flex-1'>
+                                        <View className='flex-row gap-5 items-center'>
+                                            <Text className='text-gray-500 font-bold'>
+                                                {t('ワイヤンリン')}
+                                            </Text>
+                                            <Text style={{ fontSize: 10 }} className='text-blue-500 font-semibold'>{t('Yesterday')}</Text>
+                                        </View>
+                                        <View className='overflow-hidden  rounded-xl mt-3'>
+                                            <Image style={{ width: "100%", height: 200 }}  source={require('@/assets/images/glover-memory.jpg')} resizeMode='cover' />
+                                        </View>
                                     </View>
                                 </View>
                             </View>
-                            <View className='w-full flex-row items-start gap-3'>
-                                <View>
-                                    <View className='bg-gray-200 p-1 rounded-full'>
-                                        <Image style={{ width: 30, height: 30 }} className='rounded-full' source={require('@/assets/images/avatar.png')} resizeMode='contain' />
-                                    </View>
-                                </View>
-                                <View className='flex-1'>
-                                    <View className='flex-row gap-5 items-center'>
-                                        <Text className='text-gray-500 font-bold'>
-                                            {t('Emily')}
-                                        </Text>
-                                        <Text style={{ fontSize: 10 }} className='text-blue-500 font-semibold'>{t('Yesterday')}</Text>
-                                    </View>
-                                    <View className='bg-gray-100 p-3 rounded-xl mt-2'>
-                                        <Text className='text-gray-500'>
-                                            もう少し文章を追加すると、全体の雰囲気をより正確に把握できます。フォントサイズや段落の配置など、細かいデザイン要素を調整するためにご活用ください。
-                                        </Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </View>
+                        </ScrollView>
                     </BottomSheetView>
                 </BottomSheetModal>
             </BottomSheetModalProvider>

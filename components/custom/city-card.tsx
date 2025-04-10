@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Image, ImageSourcePropType } from 'react-
 import Button from './button';
 import { useTranslation } from 'react-i18next';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { Link } from 'expo-router';
 
 const CityCard = ({
     title,
@@ -24,12 +25,14 @@ const CityCard = ({
             </View>
             <View className="p-4">
                 <Text className="text-2xl font-bold text-gray-600 mb-2">{title}</Text>
-                <Text className="text-md text-gray-600 mb-4">
+                <Text className="text-md text-gray-500 mb-4">
                     {description.length > 100 ? `${description.substring(0, 100)}...` : description}
                 </Text>
-                <Button onPress={onReadMore} variant="primary">
-                    <Text className="text-white text-sm font-semibold">{t('Read More')}</Text>
-                </Button>
+                <Link href="/(city)/about-city" asChild className='self-start'>
+                    <TouchableOpacity className="bg-blue-500 rounded-md px-4 py-2 items-center justify-center">
+                        <Text className='text-white font-bold'>{t('Read More')}</Text>
+                    </TouchableOpacity>
+                </Link>
             </View>
         </View>
     );
