@@ -8,13 +8,30 @@ import Fontisto from '@expo/vector-icons/Fontisto';
 export default function Layout() {
     const { t } = useTranslation();
     return (
-        <Tabs initialRouteName="index" screenOptions={{ tabBarActiveTintColor: '#60a5fa' }}>
+        <Tabs
+            initialRouteName="index"
+            screenOptions={{
+                tabBarActiveTintColor: '#60a5fa',
+                tabBarStyle: {
+                    height: 70,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 35,
+                    margin: 10,
+                },
+                tabBarIconStyle: {
+                    height: '100%',
+                    width: '100%',
+                },
+                tabBarShowLabel: false,
+            }}
+        >
             <Tabs.Screen
                 name="index"
                 options={{
                     headerShown: false,
                     title: t('Home'),
-                    tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={28} name="home" color={color} />,
+                    tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={30} name="home" color={color} />,
                 }}
             />
             <Tabs.Screen
@@ -24,7 +41,9 @@ export default function Layout() {
                     title: t('Cities'),
                     headerTitleAlign: 'center',
                     headerTitleStyle: { fontSize: 25, color: '#4b5563' },
-                    tabBarIcon: ({ color }: { color: string }) => <FontAwesome6 size={28} name="tree-city" color={color} />,
+                    tabBarIcon: ({ color }: { color: string }) => (
+                        <FontAwesome6 size={30} name="tree-city" color={color} />
+                    ),
                 }}
             />
             <Tabs.Screen
@@ -34,7 +53,7 @@ export default function Layout() {
                     title: t('Attractions'),
                     headerTitleAlign: 'center',
                     headerTitleStyle: { fontSize: 25, color: '#4b5563' },
-                    tabBarIcon: ({ color }: { color: string }) => <Fontisto name="heart" size={24} color={color} />,
+                    tabBarIcon: ({ color }: { color: string }) => <Fontisto name="heart" size={30} color={color} />,
                 }}
             />
             <Tabs.Screen
@@ -44,7 +63,7 @@ export default function Layout() {
                     title: t('Settings'),
                     headerTitleAlign: 'center',
                     headerTitleStyle: { fontSize: 25, color: '#4b5563' },
-                    tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={28} name="cog" color={color} />,
+                    tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={30} name="cog" color={color} />,
                 }}
             />
         </Tabs>

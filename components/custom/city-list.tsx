@@ -13,7 +13,7 @@ function CityTab({ cityId, selectedId }: { cityId: string; selectedId: string | 
 
     return (
         <View className={`px-6 h-10 flex flex-row rounded-lg  justify-center items-center`}>
-            <Text className="text-center font-base text-blue-500">{cityId}</Text>
+            <Text className="text-center font-bold font-base text-blue-500">{cityId}</Text>
         </View>
     );
 }
