@@ -1,21 +1,38 @@
-import { Stack } from 'expo-router';
+import {Stack, useFocusEffect} from 'expo-router';
 import '../global.css';
-import { useEffect } from 'react';
+import {useCallback, useEffect} from 'react';
 import 'react-native-reanimated';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 import '@/localization/i18n';
-
-SplashScreen.preventAutoHideAsync();
+import { BackHandler } from 'react-native';
+void SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-    const [loaded] = useFonts({
+	useFocusEffect(
+		useCallback(() => {
+			const onBackPress = () => {
+				// Returning true disables back button
+				return true;
+			};
+			
+			BackHandler.addEventListener('hardwareBackPress', onBackPress);
+			
+			return () => {
+				BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+			};
+		}, [])
+	);
+	
+	
+	
+	const [loaded] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     });
 
     useEffect(() => {
         if (loaded) {
-            SplashScreen.hideAsync();
+           void SplashScreen.hideAsync();
         }
     }, [loaded]);
 

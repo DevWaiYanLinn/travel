@@ -1,41 +1,53 @@
-import { Image, Text, TouchableOpacity, View } from 'react-native';
-import Feather from '@expo/vector-icons/Feather';
-import { Link } from 'expo-router';
-
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { Image, StyleSheet, Text, TextInput, View } from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
-import { useTranslation } from 'react-i18next';
+import Feather from '@expo/vector-icons/Feather';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+
 export default function Profile() {
-    const { t } = useTranslation();
-    return (
-        <View className="flex-1 p-3 bg-gray-100">
-            <View className="flex-row justify-between items-center">
-                <View className="flex-row items-center">
-                    <Image source={require('@/assets/images/avatar.png')} className="rounded-full w-12 h-12" />
-                    <View className="ml-3">
-                        <Text className="text-xl font-bold text-gray-600">John Doe</Text>
-                        <Text className="text-gray-500 text-sm font-bold">@user123</Text>
-                    </View>
-                </View>
-                <Link href={'/(user)/edit'}>
-                    <View className="bg-gray-100 rounded-full p-3">
-                        <Feather name="edit" size={23} color="black" />
-                    </View>
-                </Link>
-            </View>
-            <View className="mt-5 flex-1 bg-white gap-5 p-6 rounded-md">
-                <View className="h-[40%] gap-3 rounded-lg flex-row items-center justify-center border border-gray-300">
-                    <Entypo name="heart" size={30} color="red" />
-                    <Text className="text-3xl text-gray-600">Fav Posts</Text>
-                </View>
-            </View>
-            <TouchableOpacity
-                style={{ borderRadius: 30 }}
-                className="p-4 self-end gap-3 flex-row items-center mt-3 bg-blue-500"
-            >
-                <Ionicons name="exit-outline" size={28} color="white" />
-                <Text className="text-lg text-white font-bold">{t('Sign Out')}</Text>
-            </TouchableOpacity>
-        </View>
-    );
+	return (
+		<View className="flex-1">
+			<View className="h-48 bg-blue-400 relative">
+				<Image
+					source={require('@/assets/images/profile-edit-bg.jpg')}
+					className="w-full h-full"
+					resizeMode="stretch"
+				/>
+				<View className="flex-row justify-center absolute bottom-0 left-[30] translate-y-[50%] z-20">
+					<View className="relative">
+						<View className="absolute border-white border bottom-2 right-[0.5] z-30 p-1 rounded-full">
+							<Entypo name="camera" size={15} color="white" />
+						</View>
+						<View className="border rounded-full w-24 h-24 overflow-hidden border-white bg-white">
+							<Image source={require('@/assets/images/avatar.png')} className="w-full h-full" />
+						</View>
+					</View>
+				</View>
+			</View>
+			<View className="p-3 flex-1">
+				<View className="mt-12 gap-4 p-5 bg-white rounded-lg flex-1 ">
+					<View className="pb-5 border-b border-b-gray-300  flex-row justify-between items-center">
+						<View>
+							<Text className="text-gray-400 font-bold text-sm">Name</Text>
+							<Text className="text-gray-600 font-bold text-lg mt-1">John Doe</Text>
+						</View>
+						<Feather name="edit" size={21} color="#3b82f6" />
+					</View>
+					<View className="pb-5  border-b border-b-gray-300   flex-row justify-between items-center">
+						<View>
+							<Text className="text-gray-400 font-bold text-sm">Email</Text>
+							<Text className="text-gray-600 font-bold text-lg mt-1">john@gmail.com</Text>
+						</View>
+						<Feather name="edit" size={21} color="#3b82f6" />
+					</View>
+					<View className="pb-5  border-b border-b-gray-300 flex-row justify-between items-center">
+						<View>
+							<Text className="text-gray-400 font-bold text-sm">DOB</Text>
+							<Text className="text-gray-600 font-bold text-lg mt-1">1998/09/29</Text>
+						</View>
+						<Feather name="edit" size={21} color="#3b82f6" />
+					</View>
+				</View>
+			</View>
+		</View>
+	);
 }
