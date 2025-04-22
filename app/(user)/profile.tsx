@@ -5,8 +5,8 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export default function Profile() {
 	return (
-		<View className="flex-1">
-			<View className="h-48 bg-blue-400 relative">
+		<View className="flex-1 bg-white">
+			<View className="h-48  relative">
 				<Image
 					source={require('@/assets/images/profile-edit-bg.jpg')}
 					className="w-full h-full"
@@ -14,8 +14,8 @@ export default function Profile() {
 				/>
 				<View className="flex-row justify-center absolute bottom-0 left-[30] translate-y-[50%] z-20">
 					<View className="relative">
-						<View className="absolute border-white border bottom-2 right-[0.5] z-30 p-1 rounded-full">
-							<Entypo name="camera" size={15} color="white" />
+						<View className="absolute border-blue-400 border bottom-2 right-[0.5] z-30 p-1 rounded-full">
+							<Entypo name="camera" size={15} color="#60a5fa" />
 						</View>
 						<View className="border rounded-full w-24 h-24 overflow-hidden border-white bg-white">
 							<Image source={require('@/assets/images/avatar.png')} className="w-full h-full" />
@@ -23,8 +23,8 @@ export default function Profile() {
 					</View>
 				</View>
 			</View>
-			<View className="p-3 flex-1">
-				<View className="mt-12 gap-4 p-5 bg-white rounded-lg flex-1 ">
+			<View className="flex-1 p-3">
+				<View className="mt-12 gap-4 p-5  rounded-lg flex-1 ">
 					<View className="pb-5 border-b border-b-gray-300  flex-row justify-between items-center">
 						<View>
 							<Text className="text-gray-400 font-bold text-sm">Name</Text>

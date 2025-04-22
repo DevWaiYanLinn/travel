@@ -1,23 +1,64 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { GestureHandlerRootView, Pressable, ScrollView, TextInput } from 'react-native-gesture-handler';
-import { BottomSheetModal, BottomSheetView, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { useCallback, useRef, useState } from 'react';
-import Feather from '@expo/vector-icons/Feather';
-import { Picker } from '@react-native-picker/picker';
-import { Picker as PickerType } from '@react-native-picker/picker';
-import { useTranslation } from 'react-i18next';
-import { Dimensions } from 'react-native';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { useFocusEffect } from 'expo-router';
-import EvilIcons from '@expo/vector-icons/EvilIcons';
+import {
+    FlatList,
+    Image,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from "react-native";
+import {
+    GestureHandlerRootView,
+    Pressable,
+    ScrollView,
+    TextInput,
+} from "react-native-gesture-handler";
+import {
+    BottomSheetModal,
+    BottomSheetView,
+    BottomSheetModalProvider,
+} from "@gorhom/bottom-sheet";
+import { useCallback, useRef, useState } from "react";
+import Feather from "@expo/vector-icons/Feather";
+import { Picker } from "@react-native-picker/picker";
+import { Picker as PickerType } from "@react-native-picker/picker";
+import { useTranslation } from "react-i18next";
+import { Dimensions } from "react-native";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useFocusEffect } from "expo-router";
+import EvilIcons from "@expo/vector-icons/EvilIcons";
+import AttractionCard from "@/components/custom/attraction-card";
+
+const attractionData = [
+    {
+        title: "Sky Tree",
+        image: "../../assets/city/sky-tree.jpg",
+        ticketPrice: "Free",
+        hours: "9:00AM - 10:00PM",
+        location: "Tokyo",
+    },
+    {
+        title: "Osaka Castle",
+        image: "../../assets/city/osaka-castle.jpg",
+        ticketPrice: "$10",
+        hours: "8:00AM - 5:00PM",
+        location: "Osaka",
+    },
+    {
+        title: "Fushimi Inari",
+        image: "../../assets/city/fushimi-inari.jpg",
+        ticketPrice: "Free",
+        hours: "Always Open",
+        location: "Kyoto",
+    },
+];
 
 export default function Attraction() {
     const { t } = useTranslation();
     const filterSheetModalRef = useRef<BottomSheetModal>(null);
     const commentSheetModalRef = useRef<BottomSheetModal>(null);
 
-    const [selectedCity, setSelectedCity] = useState('default');
+    const [selectedCity, setSelectedCity] = useState("default");
 
     const handleCommentModalPress = useCallback(() => {
         commentSheetModalRef.current?.present();
@@ -57,311 +98,47 @@ export default function Attraction() {
                         <TextInput
                             editable={false}
                             pointerEvents="none"
-                            placeholder={t('Search your favorite city...')}
+                            placeholder={t("Search your favorite city...")}
                             className="flex-1 rounded-md px-4 py-3"
                         />
-                        <EvilIcons name="search" size={30} color="#6b7280" className="mx-2" />
+                        <EvilIcons
+                            name="search"
+                            size={30}
+                            color="#6b7280"
+                            className="mx-2"
+                        />
                     </View>
                 </Pressable>
             </View>
-            <ScrollView showsVerticalScrollIndicator={false} className="flex-1 mt-3">
-                <View className="gap-4">
-                    <View className="flex-row p-3 flex gap-5  bg-white rounded-lg">
-                        <View className="relative">
-                            <Image
-                                className="rounded-md"
-                                resizeMode="cover"
-                                style={{
-                                    width: Dimensions.get('window').width * 0.35,
-                                    height: Dimensions.get('window').width * 0.35,
-                                }}
-                                source={require('@/assets/city/sky-tree.jpg')}
-                            />
-                            <View className="absolute top-2 right-2 bg-gray-100  rounded-full p-1">
-                                <AntDesign name="heart" size={16} color="red" />
-                            </View>
-                        </View>
-                        <View className="flex-1">
-                            <View className="flex-1 justify-between">
-                                <Text className="text-lg font-bold text-gray-600">{t('Sky Tree')}</Text>
-                                <Text className="text-gray-500 font-bold" style={{ fontSize: 12 }}>
-                                    {t('Ticket Price')} :
-                                    <Text className="text-blue-400" style={{ fontSize: 12 }}>
-                                        {' '}
-                                        {t('Free')}
-                                    </Text>
-                                </Text>
-                                <Text className="text-gray-500 font-bold" style={{ fontSize: 12 }}>
-                                    {t('Hours')} :
-                                    <Text className="text-blue-400" style={{ fontSize: 12 }}>
-                                        {' '}
-                                        9:00AM - 10:00PM
-                                    </Text>
-                                </Text>
-                                <Text className="text-gray-500 font-bold" style={{ fontSize: 12 }}>
-                                    {t('Location')} :
-                                    <Text className="text-blue-400" style={{ fontSize: 12 }}>
-                                        {' '}
-                                        {t('Click')}
-                                    </Text>
-                                </Text>
-                            </View>
-                            <Pressable onPress={handleCommentModalPress}>
-                                <View className="flex-row w-full rounded-lg justify-end items-center gap-5">
-                                    <View className="flex-row gap-1 items-center">
-                                        <AntDesign name="hearto" size={14} color="#6b7280" />
-                                        <Text style={{ fontSize: 10 }} className=" text-gray-500">
-                                            99k
-                                        </Text>
-                                    </View>
-                                    <View className="flex-row gap-1 items-center">
-                                        <FontAwesome name="comment-o" size={15} color="#6b7280" />
-                                        <Text style={{ fontSize: 10 }} className="text-sm text-gray-500">
-                                            100
-                                        </Text>
-                                    </View>
-                                </View>
-                            </Pressable>
-                        </View>
-                    </View>
-                    <View className="flex-row p-3 flex gap-5  bg-white rounded-lg">
-                        <View className="relative">
-                            <Image
-                                className="rounded-md"
-                                resizeMode="cover"
-                                style={{
-                                    width: Dimensions.get('window').width * 0.35,
-                                    height: Dimensions.get('window').width * 0.35,
-                                }}
-                                source={require('@/assets/city/osaka-castle.jpg')}
-                            />
-                            <View className="absolute top-2 right-2 bg-gray-100  rounded-full p-1">
-                                <AntDesign name="hearto" size={16} color="red" />
-                            </View>
-                        </View>
-                        <View className="flex-1">
-                            <View className="flex-1 justify-between">
-                                <Text className="text-lg font-bold text-gray-600">{t('Osaka Castle Park')}</Text>
-                                <Text className="text-gray-600 font-bold" style={{ fontSize: 12 }}>
-                                    {t('Ticket Price')} :
-                                    <Text className="text-blue-400" style={{ fontSize: 12 }}>
-                                        {' '}
-                                        {t('1000¥')}
-                                    </Text>
-                                </Text>
-                                <Text className="text-gray-600 font-bold" style={{ fontSize: 12 }}>
-                                    {t('Hours')} :
-                                    <Text className="text-blue-400" style={{ fontSize: 12 }}>
-                                        {' '}
-                                        9:00AM : 10:00PM
-                                    </Text>
-                                </Text>
-                                <Text className="text-gray-600 font-bold" style={{ fontSize: 12 }}>
-                                    {t('Location')} :
-                                    <Text className="text-blue-400" style={{ fontSize: 12 }}>
-                                        {' '}
-                                        {t('Click')}
-                                    </Text>
-                                </Text>
-                            </View>
-                            <Pressable onPress={handleCommentModalPress}>
-                                <View className="flex-row w-full rounded-lg justify-end items-center gap-5">
-                                    <View className="flex-row gap-1 items-center">
-                                        <AntDesign name="hearto" size={14} color="#6b7280" />
-                                        <Text style={{ fontSize: 10 }} className=" text-gray-500">
-                                            99k
-                                        </Text>
-                                    </View>
-                                    <View className="flex-row gap-1 items-center">
-                                        <FontAwesome name="comment-o" size={15} color="#6b7280" />
-                                        <Text style={{ fontSize: 10 }} className="text-sm text-gray-500">
-                                            100
-                                        </Text>
-                                    </View>
-                                </View>
-                            </Pressable>
-                        </View>
-                    </View>
-                    <View className="flex-row p-3 flex gap-5  bg-white rounded-lg">
-                        <View className="relative">
-                            <Image
-                                className="rounded-md"
-                                resizeMode="cover"
-                                style={{
-                                    width: Dimensions.get('window').width * 0.35,
-                                    height: Dimensions.get('window').width * 0.35,
-                                }}
-                                source={require('@/assets/city/megane-bridge.png')}
-                            />
-                            <View className="absolute top-2 right-2 bg-gray-100  rounded-full p-1">
-                                <AntDesign name="hearto" size={16} color="red" />
-                            </View>
-                        </View>
-                        <View className="flex-1">
-                            <View className="flex-1 justify-between">
-                                <Text className="text-lg font-bold text-gray-600">{t('Megane Bridge')}</Text>
-                                <Text className="text-gray-600 font-bold" style={{ fontSize: 12 }}>
-                                    {t('Ticket Price')} :
-                                    <Text className="text-blue-400" style={{ fontSize: 12 }}>
-                                        {' '}
-                                        {t('Free')}
-                                    </Text>
-                                </Text>
-                                <Text className="text-gray-600 font-bold" style={{ fontSize: 12 }}>
-                                    {t('Hours')} :
-                                    <Text className="text-blue-400" style={{ fontSize: 12 }}>
-                                        {' '}
-                                        24 Hours
-                                    </Text>
-                                </Text>
-                                <Text className="text-gray-600 font-bold" style={{ fontSize: 12 }}>
-                                    {t('Location')} :
-                                    <Text className="text-blue-400" style={{ fontSize: 12 }}>
-                                        {' '}
-                                        {t('Click')}
-                                    </Text>
-                                </Text>
-                            </View>
-                            <View className="flex-row w-full rounded-lg justify-end mb-2 items-center gap-5">
-                                <View className="flex-row gap-1 items-center">
-                                    <AntDesign name="hearto" size={14} color="#6b7280" />
-                                    <Text style={{ fontSize: 10 }} className=" text-gray-500">
-                                        99k
-                                    </Text>
-                                </View>
-                                <View className="flex-row gap-1 items-center">
-                                    <FontAwesome name="comment-o" size={15} color="#6b7280" />
-                                    <Text style={{ fontSize: 10 }} className="text-sm text-gray-500">
-                                        50
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                    <View className="flex-row p-3 flex gap-5  bg-white rounded-lg">
-                        <View className="relative">
-                            <Image
-                                className="rounded-md"
-                                resizeMode="cover"
-                                style={{
-                                    width: Dimensions.get('window').width * 0.35,
-                                    height: Dimensions.get('window').width * 0.35,
-                                }}
-                                source={require('@/assets/city/glover-garden.png')}
-                            />
-                            <View className="absolute top-2 right-2 bg-gray-100  rounded-full p-1">
-                                <AntDesign name="hearto" size={16} color="red" />
-                            </View>
-                        </View>
-                        <View className="flex-1">
-                            <View className="flex-1 justify-between">
-                                <Text className="text-lg font-bold text-gray-600">{t('Glover Garden')}</Text>
-                                <Text className="text-gray-600 font-bold" style={{ fontSize: 12 }}>
-                                    {t('Ticket Price')} :
-                                    <Text className="text-blue-400" style={{ fontSize: 12 }}>
-                                        {' '}
-                                        {t('Free')}
-                                    </Text>
-                                </Text>
-                                <Text className="text-gray-600 font-bold" style={{ fontSize: 12 }}>
-                                    {t('Hours')} :
-                                    <Text className="text-blue-400" style={{ fontSize: 12 }}>
-                                        {' '}
-                                        9:00AM
-                                    </Text>
-                                </Text>
-                                <Text className="text-gray-600 font-bold" style={{ fontSize: 12 }}>
-                                    {t('Location')} :
-                                    <Text className="text-blue-400" style={{ fontSize: 12 }}>
-                                        {' '}
-                                        {t('Click')}
-                                    </Text>
-                                </Text>
-                            </View>
-                            <Pressable onPress={handleCommentModalPress}>
-                                <View className="flex-row w-full rounded-lg justify-end items-center gap-5">
-                                    <View className="flex-row gap-1 items-center">
-                                        <AntDesign name="hearto" size={14} color="#6b7280" />
-                                        <Text style={{ fontSize: 10 }} className=" text-gray-500">
-                                            99k
-                                        </Text>
-                                    </View>
-                                    <View className="flex-row gap-1 items-center">
-                                        <FontAwesome name="comment-o" size={15} color="#6b7280" />
-                                        <Text style={{ fontSize: 10 }} className="text-sm text-gray-500">
-                                            100
-                                        </Text>
-                                    </View>
-                                </View>
-                            </Pressable>
-                        </View>
-                    </View>
-                    <View className="flex-row p-3 flex gap-5  bg-white rounded-lg">
-                        <View className="relative">
-                            <Image
-                                className="rounded-md"
-                                resizeMode="cover"
-                                style={{
-                                    width: Dimensions.get('window').width * 0.35,
-                                    height: Dimensions.get('window').width * 0.35,
-                                }}
-                                source={require('@/assets/city/sky-tree.jpg')}
-                            />
-                            <View className="absolute top-2 right-2 bg-gray-100  rounded-full p-1">
-                                <AntDesign name="heart" size={16} color="red" />
-                            </View>
-                        </View>
-                        <View className="flex-1">
-                            <View className="flex-1 justify-between">
-                                <Text className="text-lg font-bold text-gray-600">{t('Sky Tree')}</Text>
-                                <Text className="text-gray-500 font-bold" style={{ fontSize: 12 }}>
-                                    {t('Ticket Price')} :
-                                    <Text className="text-blue-400" style={{ fontSize: 12 }}>
-                                        {' '}
-                                        {t('Free')}
-                                    </Text>
-                                </Text>
-                                <Text className="text-gray-500 font-bold" style={{ fontSize: 12 }}>
-                                    {t('Hours')} :
-                                    <Text className="text-blue-400" style={{ fontSize: 12 }}>
-                                        {' '}
-                                        9:00AM - 10:00PM
-                                    </Text>
-                                </Text>
-                                <Text className="text-gray-500 font-bold" style={{ fontSize: 12 }}>
-                                    {t('Location')} :
-                                    <Text className="text-blue-400" style={{ fontSize: 12 }}>
-                                        {' '}
-                                        {t('Click')}
-                                    </Text>
-                                </Text>
-                            </View>
-                            <Pressable onPress={handleCommentModalPress}>
-                                <View className="flex-row w-full rounded-lg justify-end items-center gap-5">
-                                    <View className="flex-row gap-1 items-center">
-                                        <AntDesign name="hearto" size={14} color="#6b7280" />
-                                        <Text style={{ fontSize: 10 }} className=" text-gray-500">
-                                            99k
-                                        </Text>
-                                    </View>
-                                    <View className="flex-row gap-1 items-center">
-                                        <FontAwesome name="comment-o" size={15} color="#6b7280" />
-                                        <Text style={{ fontSize: 10 }} className="text-sm text-gray-500">
-                                            100
-                                        </Text>
-                                    </View>
-                                </View>
-                            </Pressable>
-                        </View>
-                    </View>
-                </View>
-            </ScrollView>
+            <FlatList
+                data={attractionData}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item }) => (
+                    <AttractionCard
+                        title={t(item.title)}
+                        image={{ uri: item.image }}
+                        ticketPrice={t(item.ticketPrice)}
+                        hours={item.hours}
+                        location={t(item.location)}
+                        onCommentPress={handleCommentModalPress}
+                    />
+                )}
+                contentContainerStyle={{ gap: 10, padding: 10 }}
+            />
             <BottomSheetModalProvider>
-                <BottomSheetModal snapPoints={['100%']} ref={filterSheetModalRef} onChange={handleSheetChanges}>
-                    <BottomSheetView style={styles.contentContainer} className="p-3">
+                <BottomSheetModal
+                    snapPoints={["100%"]}
+                    index={1}
+                    ref={filterSheetModalRef}
+                    onChange={handleSheetChanges}
+                >
+                    <BottomSheetView
+                        style={styles.contentContainer}
+                        className="p-3"
+                    >
                         <View className="flex-row w-full items-center justify-between px-2 rounded-lg bg-gray-100">
                             <TextInput
-                                placeholder={t('Search For Attractions...')}
+                                placeholder={t("Search For Attractions...")}
                                 className="flex-1 rounded-l py-2"
                                 style={{ height: 50 }}
                                 autoCapitalize="none"
@@ -371,58 +148,93 @@ export default function Attraction() {
                         <View className="mt-5 w-full gap-5 flex-row ">
                             <View className="flex-1 rounded-lg overflow-hidden bg-gray-100">
                                 <Picker
-                                    style={{ width: '100%' }}
+                                    style={{ width: "100%" }}
                                     ref={cityPickerRef}
                                     selectedValue={selectedCity}
                                     onValueChange={handleCityChange}
                                     className="w-full bg-gray-100 rounded-lg px-3 py-2"
                                 >
-                                    <Picker.Item label={t('City Name')} value="default" />
-                                    <Picker.Item label={t('Tokyo')} value="tokyo" />
-                                    <Picker.Item label={t('Osaka')} value="osaka" />
+                                    <Picker.Item
+                                        label={t("City Name")}
+                                        value="default"
+                                    />
+                                    <Picker.Item
+                                        label={t("Tokyo")}
+                                        value="tokyo"
+                                    />
+                                    <Picker.Item
+                                        label={t("Osaka")}
+                                        value="osaka"
+                                    />
                                 </Picker>
                             </View>
                             <View className="flex-1 rounded-lg overflow-hidden bg-gray-100">
                                 <Picker
-                                    style={{ width: '100%' }}
+                                    style={{ width: "100%" }}
                                     ref={cityPickerRef}
                                     selectedValue={selectedCity}
                                     onValueChange={handleCityChange}
                                     className="w-full bg-gray-100 rounded-lg px-3 py-2"
                                 >
-                                    <Picker.Item label={t('Type')} value="default" />
+                                    <Picker.Item
+                                        label={t("Type")}
+                                        value="default"
+                                    />
                                     <Picker.Item label="Tokyo" value="tokyo" />
                                     <Picker.Item label="Osaka" value="osaka" />
                                     <Picker.Item label="Kyoto" value="kyoto" />
                                     <Picker.Item label="Nara" value="nara" />
-                                    <Picker.Item label="Hiroshima" value="hiroshima" />
+                                    <Picker.Item
+                                        label="Hiroshima"
+                                        value="hiroshima"
+                                    />
                                 </Picker>
                             </View>
                         </View>
                         <View className="flex-1"></View>
                     </BottomSheetView>
                 </BottomSheetModal>
-                <BottomSheetModal snapPoints={['100%']} ref={commentSheetModalRef} onChange={handleSheetChanges}>
-                    <BottomSheetView style={styles.contentContainer} className="p-3">
-                        <ScrollView className="flex-1 w-full" showsVerticalScrollIndicator={false}>
-                            <Text className="text-2xl font-bold text-gray-600 text-center">{t('Comments')}</Text>
+                <BottomSheetModal
+                    snapPoints={["100%"]}
+                    ref={commentSheetModalRef}
+                    onChange={handleSheetChanges}
+                >
+                    <BottomSheetView
+                        style={styles.contentContainer}
+                        className="p-3"
+                    >
+                        <ScrollView
+                            className="flex-1 w-full"
+                            showsVerticalScrollIndicator={false}
+                        >
+                            <Text className="text-2xl font-bold text-gray-600 text-center">
+                                {t("Comments")}
+                            </Text>
                             <View className="mt-5 flex-1 w-full gap-5">
                                 <View className="w-full flex-row items-start gap-3">
                                     <View>
                                         <View className="bg-gray-200 p-1 rounded-full">
                                             <Image
-                                                style={{ width: 30, height: 30 }}
+                                                style={{
+                                                    width: 30,
+                                                    height: 30,
+                                                }}
                                                 className="rounded-full"
-                                                source={require('@/assets/images/avatar.png')}
+                                                source={require("@/assets/images/avatar.png")}
                                                 resizeMode="contain"
                                             />
                                         </View>
                                     </View>
                                     <View className="flex-1">
                                         <View className="flex-row gap-5 items-center">
-                                            <Text className="text-gray-600 font-bold">{t('John Doe')}</Text>
-                                            <Text style={{ fontSize: 10 }} className="text-blue-500 font-semibold">
-                                                {t('Today')}
+                                            <Text className="text-gray-600 font-bold">
+                                                {t("John Doe")}
+                                            </Text>
+                                            <Text
+                                                style={{ fontSize: 10 }}
+                                                className="text-blue-500 font-semibold"
+                                            >
+                                                {t("Today")}
                                             </Text>
                                         </View>
                                         <View className="bg-gray-100 p-3 rounded-xl mt-2">
@@ -436,18 +248,26 @@ export default function Attraction() {
                                     <View>
                                         <View className="bg-gray-200 p-1 rounded-full">
                                             <Image
-                                                style={{ width: 30, height: 30 }}
+                                                style={{
+                                                    width: 30,
+                                                    height: 30,
+                                                }}
                                                 className="rounded-full"
-                                                source={require('@/assets/images/avatar.png')}
+                                                source={require("@/assets/images/avatar.png")}
                                                 resizeMode="contain"
                                             />
                                         </View>
                                     </View>
                                     <View className="flex-1">
                                         <View className="flex-row gap-5 items-center">
-                                            <Text className="text-gray-600 font-bold">{t('Emily')}</Text>
-                                            <Text style={{ fontSize: 10 }} className="text-blue-500 font-semibold">
-                                                {t('Yesterday')}
+                                            <Text className="text-gray-600 font-bold">
+                                                {t("Emily")}
+                                            </Text>
+                                            <Text
+                                                style={{ fontSize: 10 }}
+                                                className="text-blue-500 font-semibold"
+                                            >
+                                                {t("Yesterday")}
                                             </Text>
                                         </View>
                                         <View className="bg-gray-100 p-3 rounded-xl mt-2">
@@ -461,24 +281,35 @@ export default function Attraction() {
                                     <View>
                                         <View className="bg-gray-200 p-1 rounded-full">
                                             <Image
-                                                style={{ width: 30, height: 30 }}
+                                                style={{
+                                                    width: 30,
+                                                    height: 30,
+                                                }}
                                                 className="rounded-full"
-                                                source={require('@/assets/images/avatar.png')}
+                                                source={require("@/assets/images/avatar.png")}
                                                 resizeMode="contain"
                                             />
                                         </View>
                                     </View>
                                     <View className="flex-1">
                                         <View className="flex-row gap-5 items-center">
-                                            <Text className="text-gray-600 font-bold">{t('ワイヤンリン')}</Text>
-                                            <Text style={{ fontSize: 10 }} className="text-blue-500 font-semibold">
-                                                {t('Yesterday')}
+                                            <Text className="text-gray-600 font-bold">
+                                                {t("ワイヤンリン")}
+                                            </Text>
+                                            <Text
+                                                style={{ fontSize: 10 }}
+                                                className="text-blue-500 font-semibold"
+                                            >
+                                                {t("Yesterday")}
                                             </Text>
                                         </View>
                                         <View className="overflow-hidden  rounded-xl mt-3">
                                             <Image
-                                                style={{ width: '100%', height: 200 }}
-                                                source={require('@/assets/images/glover-memory.jpg')}
+                                                style={{
+                                                    width: "100%",
+                                                    height: 200,
+                                                }}
+                                                source={require("@/assets/images/glover-memory.jpg")}
                                                 resizeMode="cover"
                                             />
                                         </View>
@@ -500,7 +331,7 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 1,
-        alignItems: 'center',
-        height: '50%',
+        alignItems: "center",
+        height: "50%",
     },
 });
