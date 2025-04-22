@@ -92,7 +92,7 @@ export default function Attraction() {
             <View className="sticky">
                 <Pressable onPress={handlePresentModalPress}>
                     <View
-                        style={{ borderRadius: 30 }}
+                        style={{ borderRadius: 10 }}
                         className="bg-white h-14 flex flex-row justify-between items-center"
                     >
                         <TextInput
@@ -123,7 +123,7 @@ export default function Attraction() {
                         onCommentPress={handleCommentModalPress}
                     />
                 )}
-                contentContainerStyle={{ gap: 10, padding: 10 }}
+                contentContainerStyle={{ gap: 10, paddingTop:10 }}
             />
             <BottomSheetModalProvider>
                 <BottomSheetModal
@@ -136,7 +136,7 @@ export default function Attraction() {
                         style={styles.contentContainer}
                         className="p-3"
                     >
-                        <View className="flex-row w-full items-center justify-between px-2 rounded-lg bg-gray-100">
+                        <View className="flex-row w-full border border-gray-300 items-center justify-between px-2 rounded-lg bg-gray-100">
                             <TextInput
                                 placeholder={t("Search For Attractions...")}
                                 className="flex-1 rounded-l py-2"
@@ -146,7 +146,7 @@ export default function Attraction() {
                             <Feather name="search" size={20} color="#6b7280" />
                         </View>
                         <View className="mt-5 w-full gap-5 flex-row ">
-                            <View className="flex-1 rounded-lg overflow-hidden bg-gray-100">
+                            <View className="flex-1 rounded-lg overflow-hidden bg-gray-100 border-gray-300 border">
                                 <Picker
                                     style={{ width: "100%" }}
                                     ref={cityPickerRef}
@@ -168,7 +168,7 @@ export default function Attraction() {
                                     />
                                 </Picker>
                             </View>
-                            <View className="flex-1 rounded-lg overflow-hidden bg-gray-100">
+                            <View className="flex-1 rounded-lg overflow-hidden bg-gray-100 border-gray-300 border">
                                 <Picker
                                     style={{ width: "100%" }}
                                     ref={cityPickerRef}

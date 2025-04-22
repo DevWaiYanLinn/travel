@@ -8,7 +8,7 @@ export default function City() {
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
             <View className="sticky p-3">
-                <View style={{ borderRadius: 30 }} className="bg-white h-14 flex flex-row justify-between items-center">
+                <View style={{ borderRadius: 10 }} className="bg-white h-14 flex flex-row justify-between items-center">
                     <TextInput
                         placeholder={t('Search your favorite city...')}
                         className="flex-1 rounded-md px-4 py-3"

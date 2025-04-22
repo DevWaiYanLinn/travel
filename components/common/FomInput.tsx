@@ -19,7 +19,7 @@ const FormInput = memo(
                 <TextInput
                     {...others}
                     className={clsx(
-                        "w-full h-14 bg-gray-50 rounded-lg px-4 text-base border border-gray-300",
+                        "w-full h-14 bg-gray-100 border-gray-300 border rounded-lg px-4 text-base",
                         className
                     )}
                 />

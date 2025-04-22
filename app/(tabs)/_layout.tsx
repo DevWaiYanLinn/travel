@@ -22,6 +22,7 @@ export default function Layout() {
                 tabBarIconStyle: {
                     height: '100%',
                     width: '100%',
+               
                 },
                 tabBarShowLabel: false,
             }}
