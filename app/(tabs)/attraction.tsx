@@ -123,7 +123,7 @@ export default function Attraction() {
                         onCommentPress={handleCommentModalPress}
                     />
                 )}
-                contentContainerStyle={{ gap: 10, paddingTop:10 }}
+                contentContainerStyle={{ gap: 10, paddingTop:10                                                                                                                                                                                                                                                                                                                                                                                                                                  }}
             />
             <BottomSheetModalProvider>
                 <BottomSheetModal

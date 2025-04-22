@@ -2,8 +2,6 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { memo } from "react";
 import { View, Text, Image, Dimensions, ImageSourcePropType } from "react-native";
 
-
-
 const PopulardCard = memo(({
     name,
     image
@@ -26,7 +24,9 @@ const PopulardCard = memo(({
             <Text className="text-center mt-3  text-gray-600 font-bold">
                 {name}
             </Text>
-            <View className="absolute top-5 right-5 bg-gray-100  rounded-full p-2 ">
+            <View className="absolute top-5 right-5  rounded-full p-2 " style={{
+                backgroundColor : 'rgba(255, 255, 255, 0.75)'
+            }}>
                 <AntDesign name="hearto" size={17} color="red" />
             </View>
         </View>
