@@ -1,10 +1,21 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { useRouter } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
 import { Image, TouchableOpacity } from 'react-native';
+import { useSession } from '@/providers/session-provider';
 export default function App() {
     const router = useRouter();
     const { t } = useTranslation();
+    const { session, isLoading } = useSession();
+
+    if (isLoading) {
+        return <View />;
+    }
+
+    if (session) {
+        return <Redirect href={'/(app)/(tabs)'} />;
+    }
+
     return (
         <View className="flex-1 relative">
             <Image
@@ -24,33 +35,3 @@ export default function App() {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    message: {
-        textAlign: 'center',
-        paddingBottom: 10,
-    },
-    camera: {
-        flex: 1,
-    },
-    buttonContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        backgroundColor: 'transparent',
-        margin: 64,
-    },
-    button: {
-        flex: 1,
-        alignSelf: 'flex-end',
-        alignItems: 'center',
-    },
-    text: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: 'white',
-    },
-});

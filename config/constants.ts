@@ -1,1 +1,1 @@
-export const BASE_API_URL = 'http://192.168.1.114:3000/api'
+export const BASE_API_URL = 'https://waiyanlynn-meow-map.hf.space/api';

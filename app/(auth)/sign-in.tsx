@@ -1,45 +1,67 @@
-import { Link, useRouter } from "expo-router";
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
-import { signInApi } from "@/services/sign-in";
-import { delay } from "@/lib/utils";
-import FormInput from "@/components/common/FomInput";
+import { Link, Redirect, useRouter } from 'expo-router';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { View, Text, TouchableOpacity, Image, Alert } from 'react-native';
+import { signInApi } from '@/services/sign-in';
+import FormInput from '@/components/common/FomInput';
+import clsx from 'clsx';
+import { useSession } from '@/providers/session-provider';
 
 export default function SignIn() {
+    const { isLoading, signIn, session } = useSession();
+
+    if (isLoading) {
+        return <View />;
+    }
+
+    if (session) {
+        return <Redirect href="/(app)/(tabs)" />;
+    }
+
     const router = useRouter();
     const { t } = useTranslation();
-    const [form, setForm] = useState({ email: "", password: "" });
+    const [form, setForm] = useState({ email: '', password: '' });
     const [error, setError] = useState<{ [key: string]: any }>({
-        email: "有効なメールを入力してください。",
-        password: "パスワードは必須です。",
+        email: '',
+        password: '',
     });
-    const [isLoading, setIsLoading] = useState(false);
+    const [isPending, setIsPending] = useState(false);
 
     const handleSignIn = async () => {
-        router.push("/(tabs)");
-        // setError({});
-        // setIsLoading(true);
-        // await delay(50000);
-        // try {
-        //     await signInApi(form);
-        // } catch (e: unknown) {
-        //     if (e instanceof Response) {
-        //         if (e.status === 400) {
-        //             const { errors } = await e.json();
-        //             setError({
-        //                 email: errors.email,
-        //                 password: errors.password,
-        //             });
-        //             return;
-        //         }
+        setError({});
+        setIsPending(true);
+        try {
+            const { accessToken, refreshToken } = await signInApi(form);
+            signIn(JSON.stringify({ accessToken, refreshToken }));
+            router.push('/(app)/(tabs)');
+        } catch (e: unknown) {
+            if (e instanceof Response) {
+                const { errors, message } = await e.json();
+                if (e.status === 400) {
+                    if (errors) {
+                        setError({
+                            email: errors.email,
+                            password: errors.password,
+                        });
+                        return;
+                    }
+                    if (message) {
+                    }
+                }
 
-        //         if (e.status === 401) {
-        //         }
-        //     }
-        // } finally {
-        //     setIsLoading(false);
-        // }
+                if (e.status === 401) {
+                    Alert.alert('エラー ', 'メールアドレスとパスワードが間違い', [
+                        {
+                            text: 'キャンセル',
+                            style: 'cancel',
+                        },
+                        { text: 'OK' },
+                    ]);
+                }
+            }
+        } finally {
+            setIsPending(false);
+        }
     };
 
     return (
@@ -52,7 +74,7 @@ export default function SignIn() {
                 }}
             >
                 <Image
-                    source={require("@/assets/images/sign-in-bg.png")}
+                    source={require('@/assets/images/sign-in-bg.png')}
                     resizeMode="stretch"
                     className="w-full h-full"
                 />
@@ -64,12 +86,11 @@ export default function SignIn() {
                     borderTopRightRadius: 50,
                 }}
             >
-                <Text className="text-3xl text-blue-500 text-center py-2 font-bold">
-                    {t("ミャウマップ")}
-                </Text>
+                <Text className="text-3xl text-blue-500 text-center py-2 font-bold">{t('ミャウマップ')}</Text>
                 <FormInput
+                    editable={!isPending}
                     className="w-full h-14 bg-gray-50 rounded-lg px-4 text-base border border-gray-300"
-                    placeholder={t("email")}
+                    placeholder={t('email')}
                     placeholderTextColor="#aaa"
                     keyboardType="email-address"
                     autoCapitalize="none"
@@ -78,30 +99,27 @@ export default function SignIn() {
                     onChangeText={(value) => setForm({ ...form, email: value })}
                 />
                 <FormInput
+                    editable={!isPending}
                     className="w-full h-14 bg-gray-50 rounded-lg px-4  text-base border border-gray-300"
-                    placeholder={t("password")}
+                    placeholder={t('password')}
                     placeholderTextColor="#aaa"
                     secureTextEntry
                     errorText={error.password}
                     value={form.password}
-                    onChangeText={(value) =>
-                        setForm({ ...form, password: value })
-                    }
+                    onChangeText={(value) => setForm({ ...form, password: value })}
                 />
                 <TouchableOpacity
-                    disabled={isLoading}
+                    disabled={isPending}
                     onPress={handleSignIn}
-                    className="w-full h-14 bg-blue-500 justify-center items-center rounded-lg"
+                    className={clsx(
+                        'w-full h-14 bg-blue-500 justify-center items-center rounded-lg',
+                        isPending && 'bg-blue-200'
+                    )}
                 >
-                    <Text className="text-white text-lg font-bold">
-                        {t("Sign In")}
-                    </Text>
+                    <Text className="text-white text-lg font-bold">{t('Sign In')}</Text>
                 </TouchableOpacity>
-                <Link
-                    href={"/(auth)/sign-up"}
-                    className="w-full text-center text-primary text-[1.1rem] underline"
-                >
-                    {t("Sign Up")}
+                <Link href={'/(auth)/sign-up'} className="w-full text-center text-primary text-[1.1rem] underline">
+                    {t('Sign Up')}
                 </Link>
             </View>
         </View>

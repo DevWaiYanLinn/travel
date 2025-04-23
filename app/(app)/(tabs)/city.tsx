@@ -2,9 +2,16 @@ import CityCard from '@/components/custom/city-card';
 import { KeyboardAvoidingView, Platform, ScrollView, TextInput, View } from 'react-native';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import { useTranslation } from 'react-i18next';
+import useSWR from 'swr';
+import { getAllCities } from '@/services/cities.services';
+import { useSession } from '@/providers/session-provider';
 
 export default function City() {
     const { t } = useTranslation();
+    const { session } = useSession();
+    const { data: cities, error } = useSWR('/cities', (url: string) =>
+        getAllCities(url, JSON.parse(session!).accessToken)
+    );
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
             <View className="sticky p-3">
@@ -20,19 +27,9 @@ export default function City() {
                 <View className="gap-4">
                     <CityCard
                         imageUrl={require('@/assets/city/tokyo.png')}
-                        title={t('Tokyo')}
-                        description={t(
+                        name={t('Tokyo')}
+                        about={t(
                             'Tokyo, the capital of Japan, is one of the most vibrant and modern cities in the world. With a population of over 14 million people, it is the most populous metropolitan area globally. Tokyo is a city where tradition meets innovation,'
-                        )}
-                        onReadMore={() => {
-                            console.log('Read more clicked');
-                        }}
-                    />
-                    <CityCard
-                        imageUrl={require('@/assets/city/osaka-castle.jpg')}
-                        title={t('Osaka')}
-                        description={t(
-                            "Osaka, located in the Kansai region of Japan, is known for its lively atmosphere, rich culture, and unique cuisine. The city, which is Japan's third-largest, is a major economic and entertainment hub. Known as the ‘Kitchen of Japan,’"
                         )}
                         onReadMore={() => {
                             console.log('Read more clicked');

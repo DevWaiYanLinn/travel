@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, Text, TouchableOpacity } from 'react-native';
-import { FlatList, View } from 'react-native';
+import { View } from 'react-native';
 
 function CityTab({ cityId, selectedId }: { cityId: string; selectedId: string | null }) {
     if (cityId === selectedId)
