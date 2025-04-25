@@ -4,28 +4,17 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import Fontisto from '@expo/vector-icons/Fontisto';
+import { AntDesign } from '@expo/vector-icons';
+import { TAB_BAR_OPTIONS } from '@/config/constants';
+
+
 
 export default function Layout() {
     const { t } = useTranslation();
     return (
-        <Tabs
+        <Tabs   
             initialRouteName="index"
-            screenOptions={{
-                tabBarActiveTintColor: '#60a5fa',
-                tabBarStyle: {
-                    height: 70,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 35,
-                    margin: 10,
-                },
-                tabBarIconStyle: {
-                    height: '100%',
-                    width: '100%',
-               
-                },
-                tabBarShowLabel: false,
-            }}
+            screenOptions={TAB_BAR_OPTIONS as any}
         >
             <Tabs.Screen
                 name="index"
@@ -54,7 +43,9 @@ export default function Layout() {
                     title: t('Attractions'),
                     headerTitleAlign: 'center',
                     headerTitleStyle: { fontSize: 25, color: '#4b5563' },
-                    tabBarIcon: ({ color }: { color: string }) => <Fontisto name="heart" size={30} color={color} />,
+                    tabBarIcon: ({ color }: { color: string }) => (
+                        <AntDesign size={30} name="star" color={color} />
+                    ),
                 }}
             />
             <Tabs.Screen

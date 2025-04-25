@@ -42,8 +42,8 @@ export default function CityList() {
         <ScrollView
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            style={{ flexGrow: 0 }}
-            className="rounded-lg bg-white p-2 "
+            style={{ flexGrow: 0, backgroundColor: "rgba(255, 255, 255, 0.6)" }}
+            className="rounded-l"
         >
             {data.map((item: string) => {
                 return (

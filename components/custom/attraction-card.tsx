@@ -1,11 +1,18 @@
 import React, { memo } from "react";
-import { View, Text, Image, Dimensions, Pressable, ImageSourcePropType } from "react-native";
+import {
+    View,
+    Text,
+    Image,
+    Dimensions,
+    Pressable,
+    ImageSourcePropType,
+} from "react-native";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 
 type AttractionCardProps = {
-    title: string;
-    image: ImageSourcePropType
+    name: string;
+    source: ImageSourcePropType;
     ticketPrice: string;
     hours: string;
     location: string;
@@ -14,8 +21,8 @@ type AttractionCardProps = {
 
 const AttractionCard = memo(
     ({
-        title,
-        image,
+        name,
+        source,
         ticketPrice,
         hours,
         location,
@@ -23,16 +30,18 @@ const AttractionCard = memo(
     }: AttractionCardProps) => {
         const { t } = useTranslation();
         return (
-            <View className="flex-row p-3 flex gap-5 bg-white rounded-lg">
+            <View className="flex-row p-3 flex gap-5 rounded-lg" style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.6)',
+            }}>
                 <View className="relative">
                     <Image
-                        className="rounded-md"
+                        className="rounded-lg overflow-hidden"
                         resizeMode="cover"
                         style={{
                             width: Dimensions.get("window").width * 0.35,
                             height: Dimensions.get("window").width * 0.35,
                         }}
-                        source={image}
+                        source={source}
                     />
                     <View className="absolute top-2 right-2 bg-gray-100 rounded-full p-1">
                         <AntDesign name="heart" size={16} color="red" />
@@ -41,13 +50,11 @@ const AttractionCard = memo(
                 <View className="flex-1">
                     <View className="flex-1 justify-between">
                         <Text className="text-lg font-bold text-gray-600">
-                            {t(title)}
+                            {name}
                         </Text>
                         <Text className="text-gray-500 font-bold text-xs">
                             {t("Ticket Price")}:{" "}
-                            <Text className="text-blue-400">
-                                {ticketPrice}
-                            </Text>
+                            <Text className="text-blue-400">{ticketPrice}</Text>
                         </Text>
                         <Text className="text-gray-500 font-bold text-xs">
                             {t("Hours")}:{" "}
@@ -58,7 +65,7 @@ const AttractionCard = memo(
                             <Text className="text-blue-400">{location}</Text>
                         </Text>
                     </View>
-                    <Pressable onPress={onCommentPress}>
+                    <Pressable onPress={onCommentPress}  className="mt-2">
                         <View className="flex-row w-full rounded-lg justify-end items-center gap-5">
                             <View className="flex-row gap-1 items-center">
                                 <AntDesign

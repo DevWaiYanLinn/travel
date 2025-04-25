@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CityList from '@/components/custom/city-list';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +27,7 @@ export default function Tab() {
                         router.push('/(auth)/sign-in');
                     }}
                 >
-                    <MaterialCommunityIcons name="logout" size={30} color="red" />
+                    <MaterialCommunityIcons name="logout" size={30} color="#f87171" />
                 </TouchableOpacity>
             </View>
             <CityList />

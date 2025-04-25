@@ -16,51 +16,54 @@ import {
     BottomSheetModal,
     BottomSheetView,
     BottomSheetModalProvider,
+    SNAP_POINT_TYPE,
 } from "@gorhom/bottom-sheet";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import { Picker } from "@react-native-picker/picker";
 import { Picker as PickerType } from "@react-native-picker/picker";
 import { useTranslation } from "react-i18next";
-import { Dimensions } from "react-native";
-import AntDesign from "@expo/vector-icons/AntDesign";
+
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFocusEffect } from "expo-router";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import AttractionCard from "@/components/custom/attraction-card";
-
-const attractionData = [
-    {
-        title: "Sky Tree",
-        image: "../../assets/city/sky-tree.jpg",
-        ticketPrice: "Free",
-        hours: "9:00AM - 10:00PM",
-        location: "Tokyo",
-    },
-    {
-        title: "Osaka Castle",
-        image: "../../assets/city/osaka-castle.jpg",
-        ticketPrice: "$10",
-        hours: "8:00AM - 5:00PM",
-        location: "Osaka",
-    },
-    {
-        title: "Fushimi Inari",
-        image: "../../assets/city/fushimi-inari.jpg",
-        ticketPrice: "Free",
-        hours: "Always Open",
-        location: "Kyoto",
-    },
-];
+import { useSession } from "@/providers/session-provider";
+import useSWR from "swr";
+import {
+    gellAllComments,
+    getAllAttractions,
+} from "@/services/attractions.services";
+import { CommentAttractionBottomSheetModal } from "@/components/custom/comment-attraction-bottom-sheet-modal";
 
 export default function Attraction() {
     const { t } = useTranslation();
     const filterSheetModalRef = useRef<BottomSheetModal>(null);
     const commentSheetModalRef = useRef<BottomSheetModal>(null);
 
+    const { session } = useSession();
+
+    const accessToken = useMemo(
+        () => JSON.parse(session!).accessToken,
+        [session]
+    );
+
+    const [attractionId, setAttractionId] = useState<string | null>(null);
+
+    const cityPickerRef = useRef<PickerType<string> | null>(null);
+
+    const {
+        data: attractions,
+        error,
+        isLoading,
+    } = useSWR("/attractions", (url: string) => {
+        return getAllAttractions(url, accessToken);
+    });
+
     const [selectedCity, setSelectedCity] = useState("default");
 
-    const handleCommentModalPress = useCallback(() => {
+    const handleCommentModalPress = useCallback((id: string) => {
+        setAttractionId(id);
         commentSheetModalRef.current?.present();
     }, []);
 
@@ -68,15 +71,17 @@ export default function Attraction() {
         filterSheetModalRef.current?.present();
     }, []);
 
-    const handleSheetChanges = useCallback((index: number) => {
-        // console.log('handleSheetChanges', index);
-    }, []);
+    const handleSheetChanges = useCallback(
+        (ndex: number, position: number, type: SNAP_POINT_TYPE) => {
+            if (type === 1) {
+            }
+        },
+        []
+    );
 
     const handleCityChange = (itemValue: string) => {
         setSelectedCity(itemValue);
     };
-
-    const cityPickerRef = useRef<PickerType<string> | null>(null);
 
     useFocusEffect(
         useCallback(() => {
@@ -92,8 +97,11 @@ export default function Attraction() {
             <View className="sticky">
                 <Pressable onPress={handlePresentModalPress}>
                     <View
-                        style={{ borderRadius: 10 }}
-                        className="bg-white h-14 flex flex-row justify-between items-center"
+                        style={{
+                            borderRadius: 10,
+                            backgroundColor: "rgba(255, 255, 255, 0.6)",
+                        }}
+                        className="h-14 flex flex-row justify-between items-center"
                     >
                         <TextInput
                             editable={false}
@@ -110,21 +118,25 @@ export default function Attraction() {
                     </View>
                 </Pressable>
             </View>
-            <FlatList
-                data={attractionData}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item }) => (
-                    <AttractionCard
-                        title={t(item.title)}
-                        image={{ uri: item.image }}
-                        ticketPrice={t(item.ticketPrice)}
-                        hours={item.hours}
-                        location={t(item.location)}
-                        onCommentPress={handleCommentModalPress}
-                    />
-                )}
-                contentContainerStyle={{ gap: 10, paddingTop:10                                                                                                                                                                                                                                                                                                                                                                                                                                  }}
-            />
+            {isLoading || error ? null : (
+                <FlatList
+                    data={attractions}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
+                        <AttractionCard
+                            name={item.translations[0].name}
+                            source={{ uri: item.images[0].url }}
+                            ticketPrice={item.translations[0].ticketPrice}
+                            hours={item.translations[0].hours}
+                            location={item.translations[0].location}
+                            onCommentPress={() => {
+                                handleCommentModalPress(item.id);
+                            }}
+                        />
+                    )}
+                    contentContainerStyle={{ gap: 10, paddingTop: 10 }}
+                />
+            )}
             <BottomSheetModalProvider>
                 <BottomSheetModal
                     snapPoints={["100%"]}
@@ -194,131 +206,13 @@ export default function Attraction() {
                         <View className="flex-1"></View>
                     </BottomSheetView>
                 </BottomSheetModal>
-                <BottomSheetModal
-                    snapPoints={["100%"]}
-                    ref={commentSheetModalRef}
-                    onChange={handleSheetChanges}
-                >
-                    <BottomSheetView
-                        style={styles.contentContainer}
-                        className="p-3"
-                    >
-                        <ScrollView
-                            className="flex-1 w-full"
-                            showsVerticalScrollIndicator={false}
-                        >
-                            <Text className="text-2xl font-bold text-gray-600 text-center">
-                                {t("Comments")}
-                            </Text>
-                            <View className="mt-5 flex-1 w-full gap-5">
-                                <View className="w-full flex-row items-start gap-3">
-                                    <View>
-                                        <View className="bg-gray-200 p-1 rounded-full">
-                                            <Image
-                                                style={{
-                                                    width: 30,
-                                                    height: 30,
-                                                }}
-                                                className="rounded-full"
-                                                source={require("@/assets/images/avatar.png")}
-                                                resizeMode="contain"
-                                            />
-                                        </View>
-                                    </View>
-                                    <View className="flex-1">
-                                        <View className="flex-row gap-5 items-center">
-                                            <Text className="text-gray-600 font-bold">
-                                                {t("John Doe")}
-                                            </Text>
-                                            <Text
-                                                style={{ fontSize: 10 }}
-                                                className="text-blue-500 font-semibold"
-                                            >
-                                                {t("Today")}
-                                            </Text>
-                                        </View>
-                                        <View className="bg-gray-100 p-3 rounded-xl mt-2">
-                                            <Text className="text-gray-600">
-                                                これはダミーテキストです。文章の内容は意味を持っていませんが、レイアウトやデザインを確認するために使われます。文字のバランスや行間を調整する際に便利です。文章の長さや漢字の割合などをテストできます。見出しや本文のスタイルを確認するのにも適しています。
-                                            </Text>
-                                        </View>
-                                    </View>
-                                </View>
-                                <View className="w-full flex-row items-start gap-3">
-                                    <View>
-                                        <View className="bg-gray-200 p-1 rounded-full">
-                                            <Image
-                                                style={{
-                                                    width: 30,
-                                                    height: 30,
-                                                }}
-                                                className="rounded-full"
-                                                source={require("@/assets/images/avatar.png")}
-                                                resizeMode="contain"
-                                            />
-                                        </View>
-                                    </View>
-                                    <View className="flex-1">
-                                        <View className="flex-row gap-5 items-center">
-                                            <Text className="text-gray-600 font-bold">
-                                                {t("Emily")}
-                                            </Text>
-                                            <Text
-                                                style={{ fontSize: 10 }}
-                                                className="text-blue-500 font-semibold"
-                                            >
-                                                {t("Yesterday")}
-                                            </Text>
-                                        </View>
-                                        <View className="bg-gray-100 p-3 rounded-xl mt-2">
-                                            <Text className="text-gray-600">
-                                                もう少し文章を追加すると、全体の雰囲気をより正確に把握できます。フォントサイズや段落の配置など、細かいデザイン要素を調整するためにご活用ください。
-                                            </Text>
-                                        </View>
-                                    </View>
-                                </View>
-                                <View className="w-full flex-row items-start gap-3">
-                                    <View>
-                                        <View className="bg-gray-200 p-1 rounded-full">
-                                            <Image
-                                                style={{
-                                                    width: 30,
-                                                    height: 30,
-                                                }}
-                                                className="rounded-full"
-                                                source={require("@/assets/images/avatar.png")}
-                                                resizeMode="contain"
-                                            />
-                                        </View>
-                                    </View>
-                                    <View className="flex-1">
-                                        <View className="flex-row gap-5 items-center">
-                                            <Text className="text-gray-600 font-bold">
-                                                {t("ワイヤンリン")}
-                                            </Text>
-                                            <Text
-                                                style={{ fontSize: 10 }}
-                                                className="text-blue-500 font-semibold"
-                                            >
-                                                {t("Yesterday")}
-                                            </Text>
-                                        </View>
-                                        <View className="overflow-hidden  rounded-xl mt-3">
-                                            <Image
-                                                style={{
-                                                    width: "100%",
-                                                    height: 200,
-                                                }}
-                                                source={require("@/assets/images/glover-memory.jpg")}
-                                                resizeMode="cover"
-                                            />
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                        </ScrollView>
-                    </BottomSheetView>
-                </BottomSheetModal>
+                {attractionId ? (
+                    <CommentAttractionBottomSheetModal
+                        attractionId={attractionId}
+                        ref={commentSheetModalRef}
+                        onChange={handleSheetChanges}
+                    />
+                ) : null}
             </BottomSheetModalProvider>
         </GestureHandlerRootView>
     );
@@ -332,6 +226,6 @@ const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
         alignItems: "center",
-        height: "50%",
+        backgroundColor: "#f3f4f6",
     },
 });
