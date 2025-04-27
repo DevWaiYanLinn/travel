@@ -39,7 +39,7 @@ export default function SignIn() {
                     'Content-Type': 'application/json',
                 },
             });
-            signIn(JSON.stringify({ accessToken, refreshToken }));
+            signIn({ accessToken, refreshToken });
             router.push('/(app)/(tabs)');
         } catch (e: unknown) {
             if (e instanceof Response) {

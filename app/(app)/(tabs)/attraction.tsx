@@ -1,22 +1,21 @@
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { GestureHandlerRootView, Pressable, ScrollView, TextInput } from 'react-native-gesture-handler';
+import { Dimensions, FlatList, StyleSheet, View } from 'react-native';
+import { GestureHandlerRootView, Pressable, TextInput } from 'react-native-gesture-handler';
 import { BottomSheetModal, BottomSheetView, BottomSheetModalProvider, SNAP_POINT_TYPE } from '@gorhom/bottom-sheet';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import Feather from '@expo/vector-icons/Feather';
 import { Picker } from '@react-native-picker/picker';
 import { Picker as PickerType } from '@react-native-picker/picker';
 import { useTranslation } from 'react-i18next';
-
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useFocusEffect } from 'expo-router';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import AttractionCard from '@/components/custom/attraction-card';
 import { useSession } from '@/providers/session-provider';
 import useSWR from 'swr';
-import { gellAllComments, getAllAttractions } from '@/services/attractions.services';
 import { CommentAttractionBottomSheetModal } from '@/components/custom/comment-attraction-bottom-sheet-modal';
 import { fetcher } from '@/lib/fetch';
 import { BASE_API_URL } from '@/config/constants';
+import { Skeleton } from '@/components/common/skeleton';
+import { list } from '@/lib/utils';
 
 export default function Attraction() {
     const { t } = useTranslation();
@@ -24,8 +23,6 @@ export default function Attraction() {
     const commentSheetModalRef = useRef<BottomSheetModal>(null);
 
     const { session } = useSession();
-
-    const accessToken = useMemo(() => JSON.parse(session!)?.accessToken, []);
 
     const [attractionId, setAttractionId] = useState<string | null>(null);
 
@@ -38,7 +35,7 @@ export default function Attraction() {
     } = useSWR('/attractions', (url: string) => {
         return fetcher(BASE_API_URL + url, {
             headers: {
-                Authorization: 'Bearer ' + accessToken,
+                Authorization: 'Bearer ' + session?.accessToken,
             },
         });
     });
@@ -72,6 +69,10 @@ export default function Attraction() {
         }, [])
     );
 
+    if (error) {
+        return null;
+    }
+
     return (
         <GestureHandlerRootView className="flex-1" style={styles.container}>
             <View className="sticky">
@@ -93,7 +94,36 @@ export default function Attraction() {
                     </View>
                 </Pressable>
             </View>
-            {isLoading || error ? null : (
+            {isLoading ? (
+                list(5).map((i) => (
+                    <View
+                        key={i}
+                        className="p-3 flex-row gap-2 rounded-lg mt-3"
+                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }}
+                    >
+                        <Skeleton
+                            className="rounded-lg"
+                            style={{
+                                width: Dimensions.get('window').width * 0.35,
+                                height: Dimensions.get('window').width * 0.35,
+                            }}
+                        />
+                        <View />
+                        <View className="flex-1">
+                            <View className="flex-1 justify-between">
+                                <Skeleton style={{ width: 150, height: 11, borderRadius: 10 }} />
+                                <Skeleton style={{ width: 130, height: 10, borderRadius: 10 }} />
+                                <Skeleton style={{ width: 120, height: 10, borderRadius: 10 }} />
+                                <Skeleton style={{ width: 100, height: 10, borderRadius: 10 }} />
+                            </View>
+                            <View className="flex-row justify-end  gap-3 mt-5 ">
+                                <Skeleton className="rounded-lg" style={{ width: 30, height: 10 }} />
+                                <Skeleton className="rounded-lg" style={{ width: 30, height: 10 }} />
+                            </View>
+                        </View>
+                    </View>
+                ))
+            ) : (
                 <FlatList
                     data={attractions}
                     keyExtractor={(item) => item.id}

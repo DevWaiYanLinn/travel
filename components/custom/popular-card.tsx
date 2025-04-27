@@ -1,6 +1,8 @@
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { memo } from 'react';
-import { View, Text, Image, Dimensions, ImageSourcePropType } from 'react-native';
+import { View, Text, Dimensions, ImageSourcePropType } from 'react-native';
+import { Image } from 'expo-image';
+import { blurhash } from '@/config/constants';
 
 const PopularCard = memo(({ name, source }: { name: string; source: ImageSourcePropType }) => {
     return (
@@ -10,11 +12,12 @@ const PopularCard = memo(({ name, source }: { name: string; source: ImageSourceP
         >
             <Image
                 style={{
+                    borderRadius: 5,
                     width: Dimensions.get('window').width * 0.4,
                     height: Dimensions.get('window').height * 0.2,
                 }}
-                className="rounded-md"
-                resizeMode="cover"
+                contentFit="cover"
+                placeholder={{ blurhash }}
                 source={source}
             />
             <Text className="text-center mt-3  text-gray-600 font-bold">{name}</Text>

@@ -1,6 +1,6 @@
 import { useSession } from '@/providers/session-provider';
 import { BottomSheetModal, BottomSheetView, SNAP_POINT_TYPE } from '@gorhom/bottom-sheet';
-import { ForwardedRef, forwardRef, useMemo, useRef, useState } from 'react';
+import { ForwardedRef, forwardRef, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
@@ -34,7 +34,6 @@ export const CommentAttractionBottomSheetModal = forwardRef(
         const mutateCommentRef = useRef<() => void>(null);
         const { t } = useTranslation();
         const { session } = useSession();
-        const accessToken = useMemo(() => JSON.parse(session!).accessToken, [session]);
         const [sortType, setSortType] = useState<SortType>('newest');
 
         const onComment = async (value: string) => {
@@ -43,16 +42,15 @@ export const CommentAttractionBottomSheetModal = forwardRef(
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        Authorization: 'Bearer ' + accessToken,
+                        Authorization: 'Bearer ' + session?.accessToken,
                     },
                     body: JSON.stringify({ content: value }),
                 });
-
                 if (mutateCommentRef.current && sortType === 'newest') {
                     mutateCommentRef.current();
-                } else {
-                    setSortType('newest');
+                    return;
                 }
+                setSortType('newest');
             } catch {}
         };
 
@@ -82,9 +80,9 @@ export const CommentAttractionBottomSheetModal = forwardRef(
                                 fetcher={([url, page]) =>
                                     fetcher(url, {
                                         headers: {
-                                            Authorization: 'Bearer ' + accessToken,
+                                            Authorization: 'Bearer ' + session?.accessToken,
                                         },
-                                    }).then((res) => res)
+                                    })
                                 }
                                 attractionId={props.attractionId}
                             />
@@ -95,9 +93,9 @@ export const CommentAttractionBottomSheetModal = forwardRef(
                                 fetcher={([url, page]) =>
                                     fetcher(url, {
                                         headers: {
-                                            Authorization: 'Bearer ' + accessToken,
+                                            Authorization: 'Bearer ' + session?.accessToken,
                                         },
-                                    }).then((res) => res)
+                                    })
                                 }
                                 attractionId={props.attractionId}
                             />

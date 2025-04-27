@@ -2,9 +2,9 @@ import { useStorageState } from '@/store/useStorageState';
 import { useContext, createContext, type PropsWithChildren } from 'react';
 
 const AuthContext = createContext<{
-    signIn: (value: string) => void;
+    signIn: (value: { accessToken: string; refreshToken: string }) => void;
     signOut: () => void;
-    session?: string | null;
+    session?: { accessToken: string; refreshToken: string } | null;
     isLoading: boolean;
 }>({
     signIn: () => null,
@@ -13,7 +13,6 @@ const AuthContext = createContext<{
     isLoading: false,
 });
 
-// This hook can be used to access the user info.
 export function useSession() {
     const value = useContext(AuthContext);
     if (process.env.NODE_ENV !== 'production') {

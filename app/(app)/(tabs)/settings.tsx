@@ -80,7 +80,7 @@ export default function Tab() {
                                     resizeMode="cover"
                                 />
                                 <Text className="text-3xl text-gray-600 text-center mt-3 font-bold">
-                                    {t('Clover Travel')}
+                                    {t('Meow Map')}
                                 </Text>
                             </View>
                             <View className="bg-white flex-1 rounded-lg mt-3 p-3">

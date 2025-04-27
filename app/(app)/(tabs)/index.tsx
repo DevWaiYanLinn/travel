@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View, Animated, StyleSheet, Dimensions } from 'react-native';
+import React from 'react';
+import { Image, ScrollView, Text, TouchableOpacity, View, Dimensions } from 'react-native';
 import { CityList } from '@/components/custom/city-list';
 import { useTranslation } from 'react-i18next';
-import { Link, Redirect, useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import PopularCard from '@/components/custom/popular-card';
 import { useSession } from '@/providers/session-provider';
@@ -53,10 +53,9 @@ const query = `query {
 `;
 
 export default function Tab() {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const router = useRouter();
     const { signOut, session } = useSession();
-    const accessToken = useMemo(() => JSON.parse(session!).accessToken, []);
 
     const {
         data: res,
@@ -67,7 +66,7 @@ export default function Tab() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: 'Bearer ' + session?.accessToken,
             },
             body: JSON.stringify({ query }),
         });
@@ -124,12 +123,13 @@ export default function Tab() {
                         ? list(3).map((i) => (
                               <View key={i} className="p-3 bg-white rounded-lg">
                                   <Skeleton
+                                      className="rounded-lg"
                                       style={{
                                           width: Dimensions.get('window').width * 0.4,
                                           height: Dimensions.get('window').height * 0.2,
                                       }}
                                   />
-                                  <Skeleton className="h-6 w-full mt-3" />
+                                  <Skeleton className="h-6 w-full mt-3 rounded-lg" />
                               </View>
                           ))
                         : res.data.preferenceAttractions.map((attraction: any) => {
@@ -155,12 +155,13 @@ export default function Tab() {
                         ? list(3).map((i) => (
                               <View key={i} className="p-3 bg-white rounded-lg">
                                   <Skeleton
+                                      className="rounded-lg"
                                       style={{
                                           width: Dimensions.get('window').width * 0.4,
                                           height: Dimensions.get('window').height * 0.2,
                                       }}
                                   />
-                                  <Skeleton className="h-6 w-full mt-3" />
+                                  <Skeleton className="h-6 w-full mt-3 rounded-lg" />
                               </View>
                           ))
                         : res.data.preferenceFoods.map((food: any) => {

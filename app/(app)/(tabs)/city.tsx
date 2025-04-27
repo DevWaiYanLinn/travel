@@ -4,7 +4,6 @@ import EvilIcons from '@expo/vector-icons/EvilIcons';
 import { useTranslation } from 'react-i18next';
 import useSWR from 'swr';
 import { useSession } from '@/providers/session-provider';
-import { useMemo } from 'react';
 import { fetcher } from '@/lib/fetch';
 import { BASE_API_URL } from '@/config/constants';
 import { Skeleton } from '@/components/common/skeleton';
@@ -13,7 +12,6 @@ import { list } from '@/lib/utils';
 export default function City() {
     const { t, i18n } = useTranslation();
     const { session } = useSession();
-    const accessToken = useMemo(() => JSON.parse(session!)?.accessToken, []);
 
     const {
         data: cities,
@@ -22,7 +20,7 @@ export default function City() {
     } = useSWR('/cities', (url: string) =>
         fetcher(BASE_API_URL + url, {
             headers: {
-                Authorization: 'Bearer ' + accessToken,
+                Authorization: 'Bearer ' + session?.accessToken,
             },
         })
     );
@@ -57,13 +55,14 @@ export default function City() {
                             />
                             <View className="p-4">
                                 <Skeleton
+                                    className="rounded-lg"
                                     style={{
                                         width: 150,
                                         height: 20,
                                     }}
                                 />
                                 <Skeleton
-                                    className="mt-3"
+                                    className="mt-3 rounded-lg"
                                     style={{
                                         width: '100%',
                                         height: 50,
