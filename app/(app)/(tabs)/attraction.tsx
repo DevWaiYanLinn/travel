@@ -1,7 +1,7 @@
 import { Dimensions, FlatList, StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView, Pressable, TextInput } from 'react-native-gesture-handler';
 import { BottomSheetModal, BottomSheetView, BottomSheetModalProvider, SNAP_POINT_TYPE } from '@gorhom/bottom-sheet';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import Feather from '@expo/vector-icons/Feather';
 import { Picker } from '@react-native-picker/picker';
 import { Picker as PickerType } from '@react-native-picker/picker';
