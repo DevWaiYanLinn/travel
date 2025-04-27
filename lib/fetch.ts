@@ -2,13 +2,12 @@ import { useCallback, useEffect, useState } from 'react';
 
 export async function fetcher(url: string, options?: RequestInit) {
     try {
-        const response = await fetch(url, options);
-        if (!response.ok) {
-            new Error(`HTTP error! status: ${response.status}`);
+        const res = await fetch(url, options);
+        if (!res.ok) {
+            throw res;
         }
-        return await response.json();
+        return await res.json();
     } catch (error) {
-        console.error('Fetch error:', error);
         throw error;
     }
 }

@@ -7,15 +7,10 @@ import Fontisto from '@expo/vector-icons/Fontisto';
 import { AntDesign } from '@expo/vector-icons';
 import { TAB_BAR_OPTIONS } from '@/config/constants';
 
-
-
 export default function Layout() {
     const { t } = useTranslation();
     return (
-        <Tabs   
-            initialRouteName="index"
-            screenOptions={TAB_BAR_OPTIONS as any}
-        >
+        <Tabs initialRouteName="index" screenOptions={TAB_BAR_OPTIONS}>
             <Tabs.Screen
                 name="index"
                 options={{
@@ -43,9 +38,7 @@ export default function Layout() {
                     title: t('Attractions'),
                     headerTitleAlign: 'center',
                     headerTitleStyle: { fontSize: 25, color: '#4b5563' },
-                    tabBarIcon: ({ color }: { color: string }) => (
-                        <AntDesign size={30} name="star" color={color} />
-                    ),
+                    tabBarIcon: ({ color }: { color: string }) => <AntDesign size={30} name="star" color={color} />,
                 }}
             />
             <Tabs.Screen

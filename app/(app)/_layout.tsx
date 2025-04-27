@@ -1,6 +1,19 @@
-import { Stack } from 'expo-router';
+import { useSession } from '@/providers/session-provider';
+import { Redirect, Stack } from 'expo-router';
+import { useMemo } from 'react';
+import { View } from 'react-native';
 
 export default function AppLayout() {
+    const { session, isLoading } = useSession();
+
+    if (isLoading) {
+        return <View />;
+    }
+
+    if (!session) {
+        return <Redirect href="/(auth)/sign-in" />;
+    }
+
     return (
         <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />

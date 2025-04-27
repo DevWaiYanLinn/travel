@@ -2,10 +2,11 @@ import { Link, Redirect, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, Text, TouchableOpacity, Image, Alert } from 'react-native';
-import { signInApi } from '@/services/sign-in';
 import FormInput from '@/components/common/FomInput';
 import clsx from 'clsx';
 import { useSession } from '@/providers/session-provider';
+import { BASE_API_URL } from '@/config/constants';
+import { fetcher } from '@/lib/fetch';
 
 export default function SignIn() {
     const { isLoading, signIn, session } = useSession();
@@ -31,7 +32,13 @@ export default function SignIn() {
         setError({});
         setIsPending(true);
         try {
-            const { accessToken, refreshToken } = await signInApi(form);
+            const { accessToken, refreshToken } = await fetcher(BASE_API_URL + '/auth/sign-in', {
+                method: 'POST',
+                body: JSON.stringify(form),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
             signIn(JSON.stringify({ accessToken, refreshToken }));
             router.push('/(app)/(tabs)');
         } catch (e: unknown) {
@@ -109,11 +116,10 @@ export default function SignIn() {
                     onChangeText={(value) => setForm({ ...form, password: value })}
                 />
                 <TouchableOpacity
-                    disabled={isPending}
                     onPress={handleSignIn}
                     className={clsx(
-                        'w-full h-14 bg-blue-500 justify-center items-center rounded-lg',
-                        isPending && 'bg-blue-200'
+                        'w-full h-14 justify-center items-center rounded-lg',
+                        isPending ? 'bg-blue-200' : 'bg-blue-500'
                     )}
                 >
                     <Text className="text-white text-lg font-bold">{t('Sign In')}</Text>

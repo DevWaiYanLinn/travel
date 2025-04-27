@@ -1,57 +1,29 @@
-import { useState } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import { View } from 'react-native';
 
-function CityTab({ cityId, selectedId }: { cityId: string; selectedId: string | null }) {
-    if (cityId === selectedId)
-        return (
-            <View className={` px-6 h-10 flex flex-row rounded-lg  justify-center items-center`}>
-                <Text className="text-center font-bold text-blue-500">{cityId}</Text>
-            </View>
-        );
-
-    return (
-        <View className={`px-6 h-10 flex flex-row rounded-lg  justify-center items-center`}>
-            <Text className="text-center font-bold font-base text-blue-500">{cityId}</Text>
-        </View>
-    );
-}
-
-export default function CityList() {
-    const [selectedId, setSelectedId] = useState<string | null>('Tokyo');
-    const handlePress = (id: string) => {
-        setSelectedId(id);
-    };
-    const { t } = useTranslation();
-
-    const data = [
-        'Tokyo',
-        'Osaka',
-        'Kyoto',
-        'Nagasaki',
-        'Hokkaido',
-        'Okinawa',
-        'Fukuoka',
-        'Kumamoto',
-        'Nara',
-        'Kagawa',
-    ];
+export const CityList = memo(({ cities }: { cities: { name: string; id: string }[] }) => {
+    const { i18n } = useTranslation();
 
     return (
         <ScrollView
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            style={{ flexGrow: 0, backgroundColor: "rgba(255, 255, 255, 0.6)" }}
+            style={{ flexGrow: 0, backgroundColor: 'rgba(255, 255, 255, 0.6)' }}
             className="rounded-l"
         >
-            {data.map((item: string) => {
+            {cities.map((c: any) => {
                 return (
-                    <TouchableOpacity key={item} onPress={() => handlePress(item)}>
-                        <CityTab cityId={t(item)} selectedId={selectedId} />
+                    <TouchableOpacity key={c.id}>
+                        <View className={` px-6 h-10 flex flex-row rounded-lg  justify-center items-center`}>
+                            <Text className="text-center font-bold text-blue-500">{c.name}</Text>
+                        </View>
                     </TouchableOpacity>
                 );
             })}
         </ScrollView>
     );
-}
+});
+
+CityList.displayName = 'CityList';
