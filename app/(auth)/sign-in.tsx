@@ -124,8 +124,11 @@ export default function SignIn() {
                 >
                     <Text className="text-white text-lg font-bold">{t('Sign In')}</Text>
                 </TouchableOpacity>
-                <Link href={'/(auth)/sign-up'} className="w-full text-center text-primary text-[1.1rem] underline">
-                    {t('Sign Up')}
+                <Link
+                    href={'/(auth)/sign-up'}
+                    className="w-full text-center text-primary text-[1.1rem] font-bold underline"
+                >
+                    {t("Don't you have and account? Sign Up")}
                 </Link>
             </View>
         </View>

@@ -145,52 +145,54 @@ export default function Attraction() {
             <BottomSheetModalProvider>
                 <BottomSheetModal
                     snapPoints={['100%']}
-                    index={1}
+                    index={0}
                     ref={filterSheetModalRef}
                     onChange={handleSheetChanges}
                 >
-                    <BottomSheetView style={styles.contentContainer} className="p-3">
-                        <View className="flex-row w-full border border-gray-300 items-center justify-between px-2 rounded-lg bg-gray-100">
-                            <TextInput
-                                placeholder={t('Search For Attractions...')}
-                                className="flex-1 rounded-l py-2"
-                                style={{ height: 50 }}
-                                autoCapitalize="none"
-                            />
-                            <Feather name="search" size={20} color="#6b7280" />
-                        </View>
-                        <View className="mt-5 w-full gap-5 flex-row ">
-                            <View className="flex-1 rounded-lg overflow-hidden bg-gray-100 border-gray-300 border">
-                                <Picker
-                                    style={{ width: '100%' }}
-                                    ref={cityPickerRef}
-                                    selectedValue={selectedCity}
-                                    onValueChange={handleCityChange}
-                                    className="w-full bg-gray-100 rounded-lg px-3 py-2"
-                                >
-                                    <Picker.Item label={t('City Name')} value="default" />
-                                    <Picker.Item label={t('Tokyo')} value="tokyo" />
-                                    <Picker.Item label={t('Osaka')} value="osaka" />
-                                </Picker>
+                    <BottomSheetView style={styles.contentContainer}>
+                        <View className="flex-1 bg-white p-3 rounded-lg">
+                            <View className="flex-row w-full border border-gray-300 items-center justify-between px-2 rounded-lg bg-gray-100">
+                                <TextInput
+                                    placeholder={t('Search For Attractions...')}
+                                    className="flex-1 rounded-l py-2"
+                                    style={{ height: 50 }}
+                                    autoCapitalize="none"
+                                />
+                                <Feather name="search" size={20} color="#6b7280" />
                             </View>
-                            <View className="flex-1 rounded-lg overflow-hidden bg-gray-100 border-gray-300 border">
-                                <Picker
-                                    style={{ width: '100%' }}
-                                    ref={cityPickerRef}
-                                    selectedValue={selectedCity}
-                                    onValueChange={handleCityChange}
-                                    className="w-full bg-gray-100 rounded-lg px-3 py-2"
-                                >
-                                    <Picker.Item label={t('Type')} value="default" />
-                                    <Picker.Item label="Tokyo" value="tokyo" />
-                                    <Picker.Item label="Osaka" value="osaka" />
-                                    <Picker.Item label="Kyoto" value="kyoto" />
-                                    <Picker.Item label="Nara" value="nara" />
-                                    <Picker.Item label="Hiroshima" value="hiroshima" />
-                                </Picker>
+                            <View className="mt-5 w-full gap-5 flex-row ">
+                                <View className="flex-1 rounded-lg overflow-hidden bg-gray-100 border-gray-300 border">
+                                    <Picker
+                                        style={{ width: '100%' }}
+                                        ref={cityPickerRef}
+                                        selectedValue={selectedCity}
+                                        onValueChange={handleCityChange}
+                                        className="w-full bg-gray-100 rounded-lg px-3 py-2"
+                                    >
+                                        <Picker.Item label={t('City Name')} value="default" />
+                                        <Picker.Item label={t('Tokyo')} value="tokyo" />
+                                        <Picker.Item label={t('Osaka')} value="osaka" />
+                                    </Picker>
+                                </View>
+                                <View className="flex-1 rounded-lg overflow-hidden bg-gray-100 border-gray-300 border">
+                                    <Picker
+                                        style={{ width: '100%' }}
+                                        ref={cityPickerRef}
+                                        selectedValue={selectedCity}
+                                        onValueChange={handleCityChange}
+                                        className="w-full bg-gray-100 rounded-lg px-3 py-2"
+                                    >
+                                        <Picker.Item label={t('Type')} value="default" />
+                                        <Picker.Item label="Tokyo" value="tokyo" />
+                                        <Picker.Item label="Osaka" value="osaka" />
+                                        <Picker.Item label="Kyoto" value="kyoto" />
+                                        <Picker.Item label="Nara" value="nara" />
+                                        <Picker.Item label="Hiroshima" value="hiroshima" />
+                                    </Picker>
+                                </View>
                             </View>
+                            <View className="flex-1"></View>
                         </View>
-                        <View className="flex-1"></View>
                     </BottomSheetView>
                 </BottomSheetModal>
                 <CommentAttractionBottomSheetModal
@@ -206,7 +208,7 @@ export default function Attraction() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 12,
+        padding: 11,
     },
     contentContainer: {
         flex: 1,

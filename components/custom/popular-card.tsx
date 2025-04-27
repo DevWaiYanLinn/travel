@@ -2,7 +2,6 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { memo } from 'react';
 import { View, Text, Dimensions, ImageSourcePropType } from 'react-native';
 import { Image } from 'expo-image';
-import { blurhash } from '@/config/constants';
 
 const PopularCard = memo(({ name, source }: { name: string; source: ImageSourcePropType }) => {
     return (
@@ -17,10 +16,9 @@ const PopularCard = memo(({ name, source }: { name: string; source: ImageSourceP
                     height: Dimensions.get('window').height * 0.2,
                 }}
                 contentFit="cover"
-                placeholder={{ blurhash }}
                 source={source}
             />
-            <Text className="text-center mt-3  text-gray-600 font-bold">{name}</Text>
+            <Text className="text-center mt-3 text-gray-600 font-bold">{name}</Text>
             <View
                 className="absolute top-5 right-5  rounded-full p-2 "
                 style={{

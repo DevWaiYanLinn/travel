@@ -1,7 +1,6 @@
-import { Image, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
 import Feather from '@expo/vector-icons/Feather';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export default function Edit() {
     return (

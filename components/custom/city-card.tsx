@@ -11,7 +11,7 @@ const CityCard = memo(({ name, about, source }: { name: string; about: string; s
 
     return (
         <View className="rounded-lg overflow-hidden relative" style={{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }}>
-            <Image source={source} style={{ width: '100%', height: 200 }} resizeMode="cover" />
+            <Image source={source} style={{ width: '100%', height: 200 }} contentFit="cover" />
             <View
                 className="absolute top-2 right-2 rounded-full p-2 "
                 style={{
