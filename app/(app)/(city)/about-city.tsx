@@ -26,7 +26,7 @@ export default function AboutCity() {
                     <Text className="text-xl text-gray-600 font-bold text-center">
                         {t("About Tokyo")}
                     </Text>
-                    <Text className="text-gray-500 mt-2 p-3 rounded-lg">
+                    <Text className="text-gray-600 mt-1 leading-6 p-3 rounded-lg">
                         {t(
                             "Tokyo, the capital of Japan, is one of the most vibrant and modern cities in the world. With a population of over 14 million people, it is the most populous metropolitan area globally. Tokyo is a city where tradition meets innovation,"
                         )}

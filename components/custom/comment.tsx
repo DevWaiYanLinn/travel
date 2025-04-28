@@ -1,7 +1,8 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { Image } from 'expo-image';
+
 
 export const Comment = memo(({ content }: { content: string }) => {
     const { t } = useTranslation();
@@ -39,9 +40,18 @@ export const Comment = memo(({ content }: { content: string }) => {
                 >
                     <Text className="text-gray-500">{content}</Text>
                 </View>
+                <Pressable>
+                    <Text className='text-sm ml-2 text-blue-500'>Reply</Text>
+                </Pressable>
             </View>
         </View>
     );
 });
 
 Comment.displayName = 'Comment';
+
+
+export const Reply = memo(() => {
+    return   <Comment content=''/>
+})
+
