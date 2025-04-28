@@ -1,4 +1,5 @@
 import {
+    ActivityIndicator,
     Dimensions,
     FlatList,
     StyleSheet,
@@ -17,7 +18,7 @@ import {
     BottomSheetModalProvider,
     SNAP_POINT_TYPE,
 } from "@gorhom/bottom-sheet";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import { Picker } from "@react-native-picker/picker";
 import { Picker as PickerType } from "@react-native-picker/picker";
@@ -31,32 +32,52 @@ import { CommentAttractionBottomSheetModal } from "@/components/custom/comment-a
 import { fetcher } from "@/lib/fetch";
 import { BASE_API_URL } from "@/config/constants";
 import { Skeleton } from "@/components/common/skeleton";
-import { list } from "@/lib/utils";
+import { buildQuerySting, filterParms, list } from "@/lib/utils";
+import useSWRInfinite from "swr/dist/infinite";
+import {
+    useLocalSearchParams,
+    useRouter,
+    useSearchParams,
+} from "expo-router/build/hooks";
 
 export default function Attraction() {
     const { t } = useTranslation();
     const filterSheetModalRef = useRef<BottomSheetModal>(null);
     const commentSheetModalRef = useRef<BottomSheetModal>(null);
-
     const { session } = useSession();
-
     const [attractionId, setAttractionId] = useState<string | null>(null);
+    const searchParmas = useLocalSearchParams();
 
-    const cityPickerRef = useRef<PickerType<string> | null>(null);
+    
+    const [parmas, setParams] = useState(searchParmas);
+
+    const router = useRouter();
 
     const {
         data: attractions,
         error,
+        size,
+        setSize,
         isLoading,
-    } = useSWR("/attractions", (url: string) => {
-        return fetcher(BASE_API_URL + url, {
-            headers: {
-                Authorization: "Bearer " + session?.accessToken,
-            },
-        });
-    });
+        isValidating,
+    } = useSWRInfinite(
+        (index, previousPageData) => {
+            if (index && !previousPageData.length) return null;
+            const parmasToString = buildQuerySting(
+                filterParms({ ...searchParmas, page: index + 1 , take:10})
+            );
+            return [`/attractions?${parmasToString}`, index + 1];
+        },
+        ([key]) => {
+            console.log(key);
+            return fetcher(BASE_API_URL + key, {
+                headers: {
+                    Authorization: "Bearer " + session?.accessToken,
+                },
+            });
+        }
+    );
 
-    const [selectedCity, setSelectedCity] = useState("default");
 
     const handleCommentModalPress = useCallback((id: string) => {
         setAttractionId(id);
@@ -75,9 +96,13 @@ export default function Attraction() {
         []
     );
 
-    const handleCityChange = (itemValue: string) => {
-        setSelectedCity(itemValue);
-    };
+    const handleFilterPress = () => {
+        router.replace(
+            `/(app)/(tabs)/attraction?${buildQuerySting(
+                filterParms({ ...parmas, limit:1})
+            )}`
+        );
+    }
 
     useFocusEffect(
         useCallback(() => {
@@ -91,6 +116,7 @@ export default function Attraction() {
     if (error) {
         return null;
     }
+
 
     return (
         <GestureHandlerRootView className="flex-1" style={styles.container}>
@@ -118,7 +144,7 @@ export default function Attraction() {
                     </View>
                 </Pressable>
             </View>
-            {isLoading ? (
+            {isLoading || !attractions ? (
                 list(5).map((i) => (
                     <View
                         key={i}
@@ -179,7 +205,20 @@ export default function Attraction() {
                 ))
             ) : (
                 <FlatList
-                    data={attractions}
+                    showsVerticalScrollIndicator={false}
+                    onEndReached={() => {
+                        const isReachingEnd =
+                            attractions &&
+                            attractions[attractions.length - 1].length < 10;
+                        if (!isReachingEnd) {
+                            setSize(size + 1);
+                        }
+                    }}
+                    ListFooterComponent={
+                        isLoading || isValidating ? <ActivityIndicator /> : null
+                    }
+                    windowSize={5}
+                    data={attractions.flatMap((a) => a)}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
                         <AttractionCard
@@ -222,14 +261,18 @@ export default function Attraction() {
                                 <View className="flex-1 rounded-lg overflow-hidden bg-gray-100 border-gray-300 border">
                                     <Picker
                                         style={{ width: "100%" }}
-                                        ref={cityPickerRef}
-                                        selectedValue={selectedCity}
-                                        onValueChange={handleCityChange}
+                                        selectedValue={parmas.cityId}
+                                        onValueChange={(value) =>
+                                            setParams({
+                                                ...parmas,
+                                                cityId: value,
+                                            })
+                                        }
                                         className="w-full bg-gray-100 rounded-lg px-3 py-2"
                                     >
                                         <Picker.Item
                                             label={t("City Name")}
-                                            value="default"
+                                            value=""
                                         />
                                         <Picker.Item
                                             label={t("Tokyo")}
@@ -241,13 +284,12 @@ export default function Attraction() {
                                         />
                                     </Picker>
                                 </View>
-                                <View className="flex-1 rounded-lg overflow-hidden bg-gray-100 border-gray-300 border">
+                                <View className="flex-1 rounded-lg overflow-hidden bg-gray-50 border-gray-300 border">
                                     <Picker
+                                        pointerEvents="none"
                                         placeholder="Tags"
                                         style={{ width: "100%" }}
-                                        ref={cityPickerRef}
-                                        selectedValue={selectedCity}
-                                        onValueChange={handleCityChange}
+                                        selectedValue={"default"}
                                         className="w-full bg-gray-100 rounded-lg px-3 py-2"
                                     >
                                         <Picker.Item
@@ -277,7 +319,10 @@ export default function Attraction() {
                                     </Picker>
                                 </View>
                             </View>
-                            <TouchableOpacity className="bg-blue-500 py-4 px-5 mt-5 rounded-lg self-start">
+                            <TouchableOpacity
+                                onPress={handleFilterPress}
+                                className="bg-blue-500 py-4 px-5 mt-5 rounded-lg self-start"
+                            >
                                 <Text className="text-white">Filter</Text>
                             </TouchableOpacity>
                             <View className="flex-1"></View>

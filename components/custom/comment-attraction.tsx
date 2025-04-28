@@ -11,14 +11,14 @@ export const CommentAttraction = memo(
             const flatListRef = useRef<FlatList>(null);
 
             const getKey = useCallback(
-                (pageIndex: number, previousPageData: Array<any> | null) => {
-                    if (previousPageData && previousPageData?.length === 0) return null;
+                (index: number, previousPageData: Array<any>) => {
+                    if (index && !previousPageData.length) return null;
                     const key = props.attractionId
                         ? [
                               `${BASE_API_URL}/attractions/${props.attractionId}/comments?page=${
-                                  pageIndex + 1
+                                index + 1
                               }&take=10&sort-type=${props.sortType}`,
-                              pageIndex + 1,
+                              index + 1,
                               props.sortType,
                           ]
                         : null;
