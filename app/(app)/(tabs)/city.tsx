@@ -52,12 +52,14 @@ export default function City() {
                 </View>
             </View>
             {isLoading ? (
-                <View className="px-3">
+                <View className="px-3 gap-3">
                     {list(3).map((i) => (
                         <View
                             key={i}
+                            className="overflow-hidden"
                             style={{
                                 backgroundColor: 'rgba(255, 255, 255, 0.6)',
+                                borderRadius: 5,
                             }}
                         >
                             <Skeleton
