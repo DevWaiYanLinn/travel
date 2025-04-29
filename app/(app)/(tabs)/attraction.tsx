@@ -103,7 +103,7 @@ export default function Attraction() {
                     </View>
                 </Pressable>
             </View>
-            {!isLoading || !attractions ? (
+            {isLoading || !attractions ? (
                 <View className="px-3 gap-3">
                     {list(5).map((i) => (
                         <View
