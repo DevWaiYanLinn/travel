@@ -13,7 +13,6 @@ import useSWR from 'swr';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 11,
     },
     contentContainer: {
         flex: 1,

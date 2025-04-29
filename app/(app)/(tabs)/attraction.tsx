@@ -83,8 +83,8 @@ export default function Attraction() {
     }
 
     return (
-        <View className="flex-1" style={styles.container}>
-            <View className="sticky">
+        <View className="flex-1">
+            <View className="sticky p-3">
                 <Pressable onPress={handlePresentModalPress}>
                     <View
                         style={{
@@ -183,7 +183,7 @@ export default function Attraction() {
                             }}
                         />
                     )}
-                    contentContainerStyle={{ gap: 10, paddingTop: 10 }}
+                    contentContainerStyle={{ gap: 10, paddingHorizontal: 10 }}
                 />
             )}
             <FilterAttractionBottomSheetModal
@@ -200,15 +200,3 @@ export default function Attraction() {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 11,
-    },
-    contentContainer: {
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#f3f4f6',
-    },
-});

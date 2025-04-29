@@ -51,9 +51,9 @@ export default function City() {
                     <EvilIcons name="search" size={30} color="#6b7280" className="mx-2" />
                 </View>
             </View>
-            <View className="flex-1 px-3">
-                {isLoading ? (
-                    list(3).map((i) => (
+            {isLoading ? (
+                <View className="px-3">
+                    {list(3).map((i) => (
                         <View
                             key={i}
                             style={{
@@ -83,23 +83,22 @@ export default function City() {
                                 />
                             </View>
                         </View>
-                    ))
-                ) : (
-                    <FlatList
-                        showsVerticalScrollIndicator={false}
-                        contentContainerStyle={{
-                            gap: 10,
-                        }}
-                        keyExtractor={(item) => item.id}
-                        data={cities}
-                        renderItem={({ item }) => {
-                            return (
-                                <CityCard name={item.name} about={item.about} source={{ uri: item.images[0].url }} />
-                            );
-                        }}
-                    />
-                )}
-            </View>
+                    ))}
+                </View>
+            ) : (
+                <FlatList
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{
+                        gap: 10,
+                        paddingHorizontal: 10,
+                    }}
+                    keyExtractor={(item) => item.id}
+                    data={cities}
+                    renderItem={({ item }) => {
+                        return <CityCard name={item.name} about={item.about} source={{ uri: item.images[0].url }} />;
+                    }}
+                />
+            )}
         </KeyboardAvoidingView>
     );
 }
