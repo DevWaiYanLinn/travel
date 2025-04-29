@@ -104,58 +104,60 @@ export default function Attraction() {
                 </Pressable>
             </View>
             {isLoading || !attractions ? (
-                list(5).map((i) => (
-                    <View
-                        key={i}
-                        className="p-3 flex-row gap-2 rounded-lg mt-3"
-                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }}
-                    >
-                        <Skeleton
-                            className="rounded-lg"
-                            style={{
-                                width: Dimensions.get('window').width * 0.35,
-                                height: Dimensions.get('window').width * 0.35,
-                            }}
-                        />
-                        <View />
-                        <View className="flex-1">
-                            <View className="flex-1 justify-between">
-                                <Skeleton
-                                    style={{
-                                        width: 150,
-                                        height: 11,
-                                        borderRadius: 10,
-                                    }}
-                                />
-                                <Skeleton
-                                    style={{
-                                        width: 130,
-                                        height: 10,
-                                        borderRadius: 10,
-                                    }}
-                                />
-                                <Skeleton
-                                    style={{
-                                        width: 120,
-                                        height: 10,
-                                        borderRadius: 10,
-                                    }}
-                                />
-                                <Skeleton
-                                    style={{
-                                        width: 100,
-                                        height: 10,
-                                        borderRadius: 10,
-                                    }}
-                                />
-                            </View>
-                            <View className="flex-row justify-end  gap-3 mt-5 ">
-                                <Skeleton className="rounded-lg" style={{ width: 30, height: 10 }} />
-                                <Skeleton className="rounded-lg" style={{ width: 30, height: 10 }} />
+                <View>
+                    {list(5).map((i) => (
+                        <View
+                            key={i}
+                            className="p-3 flex-row gap-2 rounded-lg mt-3"
+                            style={{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }}
+                        >
+                            <Skeleton
+                                className="rounded-lg"
+                                style={{
+                                    width: Dimensions.get('window').width * 0.35,
+                                    height: Dimensions.get('window').width * 0.35,
+                                }}
+                            />
+                            <View />
+                            <View className="flex-1">
+                                <View className="flex-1 justify-between">
+                                    <Skeleton
+                                        style={{
+                                            width: 150,
+                                            height: 11,
+                                            borderRadius: 10,
+                                        }}
+                                    />
+                                    <Skeleton
+                                        style={{
+                                            width: 130,
+                                            height: 10,
+                                            borderRadius: 10,
+                                        }}
+                                    />
+                                    <Skeleton
+                                        style={{
+                                            width: 120,
+                                            height: 10,
+                                            borderRadius: 10,
+                                        }}
+                                    />
+                                    <Skeleton
+                                        style={{
+                                            width: 100,
+                                            height: 10,
+                                            borderRadius: 10,
+                                        }}
+                                    />
+                                </View>
+                                <View className="flex-row justify-end  gap-3 mt-5 ">
+                                    <Skeleton className="rounded-lg" style={{ width: 30, height: 10 }} />
+                                    <Skeleton className="rounded-lg" style={{ width: 30, height: 10 }} />
+                                </View>
                             </View>
                         </View>
-                    </View>
-                ))
+                    ))}
+                </View>
             ) : (
                 <FlatList
                     ref={attractionListRef}
