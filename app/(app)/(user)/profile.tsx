@@ -1,14 +1,15 @@
-import { Image, Pressable, Text, TouchableOpacity, View } from "react-native";
-import Entypo from "@expo/vector-icons/Entypo";
-import FormInput from "@/components/common/FomInput";
-import useSWR from "swr";
-import { GRAPHQL_API_URL } from "@/config/constants";
-import { fetcher } from "@/lib/fetch";
-import { useSession } from "@/providers/session-provider";
-import { list } from "@/lib/utils";
-import { Skeleton } from "@/components/common/skeleton";
-import { useCallback, useState } from "react";
-import * as ImagePicker from "expo-image-picker";
+import { Image, Pressable, Text, TouchableOpacity, View } from 'react-native';
+import Entypo from '@expo/vector-icons/Entypo';
+import FormInput from '@/components/common/FomInput';
+import useSWR from 'swr';
+import { GRAPHQL_API_URL } from '@/config/constants';
+import { fetcher } from '@/lib/fetch';
+import { useSession } from '@/providers/session-provider';
+import { list } from '@/lib/utils';
+import { Skeleton } from '@/components/common/skeleton';
+import React, { useCallback, useState } from 'react';
+import * as ImagePicker from 'expo-image-picker';
+import { useTranslation } from 'react-i18next';
 
 const query = `query {
 	user {
@@ -21,26 +22,26 @@ const query = `query {
 `;
 
 type Profile = {
-    name?: string;
     email?: string;
     firstName?: string;
     lastName?: string;
-    dateOfBirh?: string;
+    dateOfBirth?: string;
 };
 
 export default function Profile() {
     const { session } = useSession();
     const [form, setForm] = useState<Profile>({});
+    const { t } = useTranslation();
     const {
         data: res,
         isLoading,
         error,
     } = useSWR([GRAPHQL_API_URL, query], ([url, query]) => {
         return fetcher(url, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + session?.accessToken,
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + session?.accessToken,
             },
             body: JSON.stringify({ query }),
         });
@@ -48,15 +49,13 @@ export default function Profile() {
 
     const pickImage = useCallback(async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ["images", "videos"],
+            mediaTypes: ['images', 'videos'],
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
         });
-
-        console.log(result);
     }, []);
-    
+
     if (error) {
         return null;
     }
@@ -65,7 +64,7 @@ export default function Profile() {
         <View className="flex-1 bg-white">
             <View className="h-48  relative">
                 <Image
-                    source={require("@/assets/images/profile-edit-bg.jpg")}
+                    source={require('@/assets/images/profile-edit-bg.jpg')}
                     className="w-full h-full"
                     resizeMode="stretch"
                 />
@@ -81,8 +80,8 @@ export default function Profile() {
                             {isLoading ? (
                                 <Skeleton
                                     style={{
-                                        width: "100%",
-                                        height: "100%",
+                                        width: '100%',
+                                        height: '100%',
                                     }}
                                 />
                             ) : (
@@ -90,7 +89,7 @@ export default function Profile() {
                                     source={
                                         res.data.user.profile
                                             ? { uri: res.data.user.profile }
-                                            : require("@/assets/images/avatar.png")
+                                            : require('@/assets/images/avatar.png')
                                     }
                                     className="w-full h-full"
                                 />
@@ -107,7 +106,7 @@ export default function Profile() {
                                 <Skeleton
                                     key={i}
                                     style={{
-                                        width: "100%",
+                                        width: '100%',
                                         height: 50,
                                         borderRadius: 5,
                                     }}
@@ -115,32 +114,15 @@ export default function Profile() {
                             );
                         })
                     ) : (
-                        <>
-                            <FormInput
-                                defaultValue={res.data.user.name}
-                                placeholder="Name"
-                            />
-                            <FormInput
-                                defaultValue={res.data.user.email}
-                                placeholder="Email"
-                            />
-                            <FormInput
-                                defaultValue={res.data.user.firstName}
-                                placeholder="First name"
-                            />
-                            <FormInput
-                                defaultValue={res.data.user.lastName}
-                                placeholder="Last name"
-                            />
-                            <TouchableOpacity
-                                className="bg-blue-500 w-full  py-3"
-                                style={{ borderRadius: 5 }}
-                            >
-                                <Text className="text-white text-center">
-                                    Save
-                                </Text>
+                        <React.Fragment>
+                            <FormInput defaultValue={res.data.user.lastName} placeholder={t('Last name')} />
+                            <FormInput defaultValue={res.data.user.firstName} placeholder={t('First name')} />
+                            <FormInput defaultValue={res.data.user.email} placeholder={t('Email')} />
+
+                            <TouchableOpacity className="bg-blue-500 w-full  py-3" style={{ borderRadius: 5 }}>
+                                <Text className="text-white text-center">Save</Text>
                             </TouchableOpacity>
-                        </>
+                        </React.Fragment>
                     )}
                 </View>
             </View>

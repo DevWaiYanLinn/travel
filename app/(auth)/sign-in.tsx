@@ -97,7 +97,7 @@ export default function SignIn() {
                 <FormInput
                     editable={!isPending}
                     className="w-full h-14 bg-gray-50 rounded-lg px-4 text-base border border-gray-300"
-                    placeholder={t('email')}
+                    placeholder={t('Email')}
                     placeholderTextColor="#aaa"
                     keyboardType="email-address"
                     autoCapitalize="none"
@@ -108,7 +108,7 @@ export default function SignIn() {
                 <FormInput
                     editable={!isPending}
                     className="w-full h-14 bg-gray-50 rounded-lg px-4  text-base border border-gray-300"
-                    placeholder={t('password')}
+                    placeholder={t('Password')}
                     placeholderTextColor="#aaa"
                     secureTextEntry
                     errorText={error.password}

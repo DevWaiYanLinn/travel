@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 
-
 export const Comment = memo(({ content }: { content: string }) => {
     const { t } = useTranslation();
 
@@ -22,7 +21,7 @@ export const Comment = memo(({ content }: { content: string }) => {
             </View>
             <View className="flex-1">
                 <View className="flex-row gap-5 items-center">
-                    <Text className="text-gray-500 font-bold">{t('Emily')} </Text>
+                    <Text className="text-gray-600 font-bold">{t('Emily')} </Text>
                     <Text
                         style={{
                             fontSize: 10,
@@ -32,16 +31,11 @@ export const Comment = memo(({ content }: { content: string }) => {
                         {t('Yesterday')}
                     </Text>
                 </View>
-                <View
-                    className="p-3 rounded-xl mt-2 max-w-full self-start"
-                    style={{
-                        backgroundColor: 'rgba(255, 255, 255, 0.6)',
-                    }}
-                >
-                    <Text className="text-gray-500">{content}</Text>
+                <View className="p-3 bg-gray-100 rounded-xl mt-2 max-w-full self-start">
+                    <Text className="text-gray-600">{content}</Text>
                 </View>
                 <Pressable>
-                    <Text className='text-sm ml-2 text-blue-500'>Reply</Text>
+                    <Text className="text-sm ml-2 text-blue-500">Reply</Text>
                 </Pressable>
             </View>
         </View>
@@ -50,8 +44,6 @@ export const Comment = memo(({ content }: { content: string }) => {
 
 Comment.displayName = 'Comment';
 
-
 export const Reply = memo(() => {
-    return   <Comment content=''/>
-})
-
+    return <Comment content="" />;
+});

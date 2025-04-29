@@ -24,7 +24,9 @@
                 "backgroundColor": "#ffffff"
             },
             "package": "com.wyl.clover.travel",
-            "permissions": ["CAMERA"]
+            "permissions": [
+                "CAMERA"
+            ]
         },
         "web": {
             "bundler": "metro",
@@ -38,7 +40,9 @@
                     "origin": "https://jtravel.dev/"
                 }
             ],
-            ["expo-localization"],
+            [
+                "expo-localization"
+            ],
             [
                 "expo-splash-screen",
                 {

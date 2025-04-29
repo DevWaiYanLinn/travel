@@ -9,6 +9,8 @@ import { BackHandler } from 'react-native';
 import { SessionProvider } from '@/providers/session-provider';
 import { Slot } from 'expo-router';
 import { SWRConfig } from 'swr';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 void SplashScreen.preventAutoHideAsync();
 
@@ -48,7 +50,11 @@ export default function RootLayout() {
                     provider: () => new Map(),
                 }}
             >
-                <Slot />
+                <GestureHandlerRootView>
+                    <BottomSheetModalProvider>
+                        <Slot />
+                    </BottomSheetModalProvider>
+                </GestureHandlerRootView>
             </SWRConfig>
         </SessionProvider>
     );
