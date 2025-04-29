@@ -103,16 +103,16 @@ export default function Attraction() {
                     </View>
                 </Pressable>
             </View>
-            {isLoading || !attractions ? (
-                <View>
+            {!isLoading || !attractions ? (
+                <View className="px-3 gap-3">
                     {list(5).map((i) => (
                         <View
                             key={i}
-                            className="p-3 flex-row gap-2 rounded-lg mt-3"
+                            className="flex-row gap-2 p-3 rounded-lg"
                             style={{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }}
                         >
                             <Skeleton
-                                className="rounded-lg"
+                                className=" rounded-lg"
                                 style={{
                                     width: Dimensions.get('window').width * 0.35,
                                     height: Dimensions.get('window').width * 0.35,
