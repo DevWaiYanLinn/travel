@@ -1,65 +1,47 @@
-import {
-    Image,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
-    Dimensions,
-} from "react-native";
-import { CityList } from "@/components/custom/city-list";
-import { useTranslation } from "react-i18next";
-import { Link, useRouter } from "expo-router";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import PopularCard from "@/components/custom/popular-card";
-import { useSession } from "@/providers/session-provider";
-import useSWR from "swr";
-import { GRAPHQL_API_URL } from "@/config/constants";
-import { fetcher } from "@/lib/fetch";
-import { Skeleton } from "@/components/common/skeleton";
-import { list } from "@/lib/utils";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import React from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View, Dimensions } from 'react-native';
+import { CityList } from '@/components/custom/city-list';
+import { useTranslation } from 'react-i18next';
+import { Link, useRouter } from 'expo-router';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import PopularCard from '@/components/custom/popular-card';
+import { useSession } from '@/providers/session-provider';
+import useSWR from 'swr';
+import { GRAPHQL_API_URL } from '@/config/constants';
+import { fetcher } from '@/lib/fetch';
+import { Skeleton } from '@/components/common/skeleton';
+import { list } from '@/lib/utils';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import React from 'react';
 const query = `query {
   user {
+    id
     email
   }
-  cities {
+  cities(orderBy: "preferences") {
     id
     name
-    translations {
-      name
+    preferences {
+      userId
     }
   }
-  preferenceAttractions {
+  attractions(orderBy: "preferences") {
     id
     name
-    translations {
-      name
+    preferences {
+      userId
     }
     images {
       url
     }
-    _count {
-      preferences
-    }
-    preferences {
-        userId
-    }
   }
-  preferenceFoods {
+  foods(orderBy: "preferences") {
     id
     name
-    translations {
-      name
+    preferences {
+      userId
     }
     images {
       url
-    }
-    _count {
-      preferences
-    }
-    preferences {
-        userId
     }
   }
 }
@@ -76,23 +58,24 @@ export default function Tab() {
         error,
     } = useSWR([GRAPHQL_API_URL, query], ([url, query]) => {
         return fetcher(url, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + session?.accessToken,
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + session?.accessToken,
             },
             body: JSON.stringify({ query }),
         });
     });
 
     if (error) {
+        console.log();
         return null;
     }
 
     return (
         <ScrollView className="p-3 flex-1">
             <View className="flex-row items-center justify-between mb-5">
-                <Link href={"/(app)/(user)/profile"}>
+                <Link href={'/(app)/(user)/profile'}>
                     <View className="flex-row items-center">
                         {isLoading ? (
                             <React.Fragment>
@@ -102,13 +85,12 @@ export default function Tab() {
                         ) : (
                             <React.Fragment>
                                 <Image
-                                    source={require("@/assets/images/avatar.png")}
+                                    source={require('@/assets/images/avatar.png')}
                                     className="w-12 h-12 rounded-full mr-3"
                                 />
                                 <Text className="text-lg font-bold text-gray-600 ">
                                     {res.data.user?.email.length > 5
-                                        ? res.data.user.email.substring(0, 10) +
-                                          " ..."
+                                        ? res.data.user.email.substring(0, 10) + ' ...'
                                         : res.data.user.email}
                                 </Text>
                             </React.Fragment>
@@ -118,35 +100,23 @@ export default function Tab() {
                 <View className="flex-row items-center gap-5">
                     <View className="w-10 h-10 relative rounded-full bg-gray-200 justify-center items-center">
                         <View className="rounded-full px-1 bg-red-500 absolute top-0 -right-1">
-                            <Text className="text-white text-xs font-bold">
-                                0
-                            </Text>
+                            <Text className="text-white text-xs font-bold">0</Text>
                         </View>
-                        <Ionicons
-                            name="notifications"
-                            size={24}
-                            color="#4b5563"
-                        />
+                        <Ionicons name="notifications" size={24} color="#4b5563" />
                     </View>
                     <TouchableOpacity
                         onPress={() => {
                             signOut();
-                            router.push("/(auth)/sign-in");
+                            router.push('/(auth)/sign-in');
                         }}
                     >
-                        <MaterialCommunityIcons
-                            name="logout"
-                            size={30}
-                            color="#ef4444"
-                        />
+                        <MaterialCommunityIcons name="logout" size={30} color="#ef4444" />
                     </TouchableOpacity>
                 </View>
             </View>
             {isLoading ? null : <CityList cities={res.data.cities} />}
             <View className="mt-5">
-                <Text className="text-xl text-gray-600 font-bold">
-                    {t("Popular Attractions")}
-                </Text>
+                <Text className="text-xl text-gray-600 font-bold">{t('Popular Attractions')}</Text>
                 <ScrollView
                     contentContainerClassName="gap-3"
                     horizontal={true}
@@ -159,38 +129,30 @@ export default function Tab() {
                                   <Skeleton
                                       className="rounded-lg"
                                       style={{
-                                          width:
-                                              Dimensions.get("window").width *
-                                              0.4,
-                                          height:
-                                              Dimensions.get("window").height *
-                                              0.2,
+                                          width: Dimensions.get('window').width * 0.4,
+                                          height: Dimensions.get('window').height * 0.2,
                                       }}
                                   />
                                   <Skeleton className="h-6 w-full mt-3 rounded-lg" />
                               </View>
                           ))
-                        : res.data.preferenceAttractions.map(
-                              (attraction: any) => {
-                                  return (
-                                      <PopularCard
-                                          apiEndPoint={`/attractions/${attraction.id}/preferences`}
-                                          preferences={!!attraction.preferences.length}
-                                          key={attraction.id}
-                                          name={attraction.name}
-                                          source={{
-                                              uri: attraction.images[0].url,
-                                          }}
-                                      />
-                                  );
-                              }
-                          )}
+                        : res.data.attractions.map((attraction: any) => {
+                              return (
+                                  <PopularCard
+                                      preferences={!!attraction.preference.length}
+                                      apiEndPoint={`/attractions/${attraction.id}/preferences`}
+                                      key={attraction.id}
+                                      name={attraction.name}
+                                      source={{
+                                          uri: attraction.images[0].url,
+                                      }}
+                                  />
+                              );
+                          })}
                 </ScrollView>
             </View>
             <View className="mt-5">
-                <Text className="text-xl text-gray-600 font-bold">
-                    {t("Popular Cuisines")}
-                </Text>
+                <Text className="text-xl text-gray-600 font-bold">{t('Popular Cuisines')}</Text>
                 <ScrollView
                     contentContainerClassName="gap-3"
                     horizontal={true}
@@ -203,22 +165,18 @@ export default function Tab() {
                                   <Skeleton
                                       className="rounded-lg"
                                       style={{
-                                          width:
-                                              Dimensions.get("window").width *
-                                              0.4,
-                                          height:
-                                              Dimensions.get("window").height *
-                                              0.2,
+                                          width: Dimensions.get('window').width * 0.4,
+                                          height: Dimensions.get('window').height * 0.2,
                                       }}
                                   />
                                   <Skeleton className="h-6 w-full mt-3 rounded-lg" />
                               </View>
                           ))
-                        : res.data.preferenceFoods.map((food: any) => {
+                        : res.data.foods.map((food: any) => {
                               return (
                                   <PopularCard
-                                      apiEndPoint={`/foods/${food.id}/preferences`}
-                                      preferences={!!food.preferences.length}
+                                      preferences={!!food.preference.length}
+                                      apiEndPoint={`/attractions/${food.id}/preferences`}
                                       key={food.id}
                                       name={food.name}
                                       source={{ uri: food.images[0].url }}
