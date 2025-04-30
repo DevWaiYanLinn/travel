@@ -1,9 +1,7 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import Fontisto from '@expo/vector-icons/Fontisto';
 import { AntDesign } from '@expo/vector-icons';
 import { TAB_BAR_OPTIONS } from '@/config/constants';
 

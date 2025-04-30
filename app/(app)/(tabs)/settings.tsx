@@ -39,8 +39,8 @@ export default function Tab() {
                         <Text className="text-gray-600 font-bold">{t('English')}</Text>
                         <Switch
                             disabled={i18n.language === 'en'}
-                            trackColor={{ false: '#767577', true: '#81b0ff' }}
-                            thumbColor={i18n.language === 'en' ? '#81b0ff' : '#f4f3f4'}
+                            trackColor={{ false: '#767577', true: '#818cf8' }}
+                            thumbColor={i18n.language === 'en' ? '#818cf8' : '#f4f3f4'}
                             ios_backgroundColor="#3e3e3e"
                             onValueChange={() => handleLanguageChange('en')}
                             value={i18n.language === 'en'}
@@ -50,8 +50,8 @@ export default function Tab() {
                         <Text className="text-gray-600 font-bold">{t('Japanese')}</Text>
                         <Switch
                             disabled={i18n.language === 'jp'}
-                            trackColor={{ false: '#767577', true: '#81b0ff' }}
-                            thumbColor={i18n.language === 'jp' ? '#81b0ff' : '#f4f3f4'}
+                            trackColor={{ false: '#767577', true: '#818cf8' }}
+                            thumbColor={i18n.language === 'jp' ? '#818cf8' : '#f4f3f4'}
                             ios_backgroundColor="#3e3e3e"
                             onValueChange={() => handleLanguageChange('jp')}
                             value={i18n.language === 'jp'}
@@ -65,7 +65,7 @@ export default function Tab() {
                     className="mt-3 px-4 py-3 rounded-lg flex-row gap-3 items-center"
                     style={{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }}
                 >
-                    <AntDesign name="infocirlceo" size={20} color="#4b5563" />
+                    <AntDesign name="infocirlceo" size={20} color="#818cf8" />
                     <Text className="text-gray-600 font-bold">{t('About the App')}</Text>
                 </View>
             </Pressable>

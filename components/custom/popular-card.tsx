@@ -1,36 +1,51 @@
-import AntDesign from '@expo/vector-icons/AntDesign';
-import { memo } from 'react';
-import { View, Text, Dimensions, ImageSourcePropType } from 'react-native';
-import { Image } from 'expo-image';
+import { memo } from "react";
+import { View, Text, Dimensions, ImageSourcePropType } from "react-native";
+import { Image } from "expo-image";
+import { UserPreference } from "./user-preference";
 
-const PopularCard = memo(({ name, source }: { name: string; source: ImageSourcePropType }) => {
+type PopularCardProps = {
+    name: string;
+    source: ImageSourcePropType;
+    preferences: boolean;
+    apiEndPoint: string;
+};
+
+const PopularCard = memo((props: PopularCardProps) => {
     return (
         <View
-            className="rounded-lg p-3 relative overflow-hidden"
-            style={{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }}
+            className="rounded-lg p-3"
+            style={{ backgroundColor: "rgba(255, 255, 255, 0.6)" }}
         >
-            <Image
+            <View
+                className="relative overflow-hidden"
                 style={{
                     borderRadius: 5,
-                    width: Dimensions.get('window').width * 0.4,
-                    height: Dimensions.get('window').height * 0.2,
-                }}
-                contentFit="cover"
-                source={source}
-            />
-            <Text className="text-center mt-3 text-gray-600 font-bold">{name}</Text>
-            <View
-                className="absolute top-5 right-5  rounded-full p-2 "
-                style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.75)',
+                    width: Dimensions.get("window").width * 0.4,
+                    height: Dimensions.get("window").height * 0.2,
                 }}
             >
-                <AntDesign name="hearto" size={17} color="red" />
+                <Image
+                    className="w-full h-full"
+                    contentFit="cover"
+                    source={props.source}
+                    style={{ width: "100%", height: "100%" }}
+                />
+                <UserPreference
+                    preference={props.preferences}
+                    apiEndPoint={props.apiEndPoint}
+                />
             </View>
+            <Text
+                className="w-full text-center mt-3 text-gray-600 font-bold"
+            >
+                {props.name.length > 8
+                    ? props.name.substring(0, 8) + ".."
+                    : props.name}
+            </Text>
         </View>
     );
 });
 
-PopularCard.displayName = 'PopularCityCard';
+PopularCard.displayName = "PopularCityCard";
 
 export default PopularCard;

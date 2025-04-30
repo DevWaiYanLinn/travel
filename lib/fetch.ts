@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
 export async function fetcher(url: string, options?: RequestInit) {
     try {
@@ -6,7 +6,12 @@ export async function fetcher(url: string, options?: RequestInit) {
         if (!res.ok) {
             throw res;
         }
-        return await res.json();
+        
+        const contentType = res.headers.get("Content-Type");
+
+        if (contentType && contentType.includes("application/json")) {
+            return res.json();
+        }
     } catch (error) {
         throw error;
     }

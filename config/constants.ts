@@ -5,7 +5,7 @@ export const BASE_API_URL = 'https://waiyanlynn-meow-map.hf.space/api';
 export const GRAPHQL_API_URL = 'https://waiyanlynn-meow-map.hf.space/graphql';
 
 export const TAB_BAR_OPTIONS: BottomTabNavigationOptions = {
-    tabBarActiveTintColor: '#3b82f6',
+    tabBarActiveTintColor: '#6366f1',
     tabBarStyle: {
         height: 55,
         justifyContent: 'center',

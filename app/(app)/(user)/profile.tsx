@@ -72,9 +72,9 @@ export default function Profile() {
                     <View className="relative">
                         <Pressable
                             onPress={pickImage}
-                            className="absolute border-blue-400 border bottom-2 right-[0.5] z-30 p-1 rounded-full"
+                            className="absolute border-indigo-400 border bottom-2 right-[0.5] z-30 p-1 rounded-full"
                         >
-                            <Entypo name="camera" size={15} color="#60a5fa" />
+                            <Entypo name="camera" size={15} color="#6366f1" />
                         </Pressable>
                         <View className="border rounded-full w-24 h-24 overflow-hidden border-white bg-white">
                             {isLoading ? (
@@ -119,8 +119,8 @@ export default function Profile() {
                             <FormInput defaultValue={res.data.user.firstName} placeholder={t('First name')} />
                             <FormInput defaultValue={res.data.user.email} placeholder={t('Email')} />
 
-                            <TouchableOpacity className="bg-blue-500 w-full  py-3" style={{ borderRadius: 5 }}>
-                                <Text className="text-white text-center">Save</Text>
+                            <TouchableOpacity className="bg-indigo-500 w-full  py-3" style={{ borderRadius: 5 }}>
+                                <Text className="text-white text-center">{t('Save')}</Text>
                             </TouchableOpacity>
                         </React.Fragment>
                     )}
