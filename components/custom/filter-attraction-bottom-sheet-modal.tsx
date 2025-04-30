@@ -129,7 +129,7 @@ const FilterAttractionBottomSheetModal = memo(
                                 onPress={() => {
                                     props.handleFilterPress(params);
                                 }}
-                                className="bg-blue-500 py-3 px-5 mt-5 rounded-lg self-start"
+                                className="bg-indigo-500 py-3 px-5 mt-5 rounded-lg self-start"
                             >
                                 <Text className="text-white font-semibold">{t('Filter')}</Text>
                             </TouchableOpacity>
