@@ -86,13 +86,13 @@ export default function Tab() {
                                 className=" w-20 h-20 rounded-lg mr-3"
                                 resizeMode="cover"
                             />
-                            <Text className="text-3xl text-gray-600 text-center mt-3 font-bold">{t('Meow Map')}</Text>
+                            <Text className="text-3xl text-gray-600 text-center mt-3 font-bold">{t('MeowMap')}</Text>
                         </View>
                         <View className="bg-gray-50 flex-1 rounded-lg mt-3 p-3">
-                            <Text className="text-gray-600 font-semibold">
+                            <Text className="text-gray-600">
                                 このアプリは、長崎市への深い感謝の気持ちを込めて開発しました。長崎市は、私が日本で開発者としての旅を始めるきっかけを与えてくれた特別な場所です。日本で生活できていること、そしてこれまで支えてくださった皆さんに心から感謝しています。
                             </Text>
-                            <Text className="text-gray-600 mt-3 font-semibold">
+                            <Text className="text-gray-600 mt-3">
                                 現在このアプリはプロトタイプの段階ですが、時間のあるときに少しずつ開発を進めていく予定です。日本、特に長崎を訪れる方々にとって役立つものになることを願っています。旅行のヒントや観光スポット、ぜひ試してほしい食べ物などを、ひとつのアプリにまとめてお届けします。
                             </Text>
                         </View>
