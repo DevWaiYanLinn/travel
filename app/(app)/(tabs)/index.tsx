@@ -139,7 +139,7 @@ export default function Tab() {
                         : res.data.attractions.map((attraction: any) => {
                               return (
                                   <PopularCard
-                                      preferences={!!attraction.preference.length}
+                                      preferences={!!attraction.preferences.length}
                                       apiEndPoint={`/attractions/${attraction.id}/preferences`}
                                       key={attraction.id}
                                       name={attraction.name}
@@ -175,8 +175,8 @@ export default function Tab() {
                         : res.data.foods.map((food: any) => {
                               return (
                                   <PopularCard
-                                      preferences={!!food.preference.length}
-                                      apiEndPoint={`/attractions/${food.id}/preferences`}
+                                      preferences={!!food.preferences.length}
+                                      apiEndPoint={`/foods/${food.id}/preferences`}
                                       key={food.id}
                                       name={food.name}
                                       source={{ uri: food.images[0].url }}
