@@ -74,7 +74,6 @@ export const CommentAttractionBottomSheetModal = forwardRef(
                     },
                 });
             },
-            { revalidateFirstPage: false }
         );
 
         const mutateComment = useCallback(async () => {
@@ -108,6 +107,7 @@ export const CommentAttractionBottomSheetModal = forwardRef(
                 setSortType('newest');
             } catch {}
         };
+
         return (
             <BottomSheetModal
                 snapPoints={snapPoints}

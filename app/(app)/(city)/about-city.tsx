@@ -57,7 +57,6 @@ export default function AboutCity() {
                             }}
                             contentFit="cover"
                         />
-                        {/* <View className="absolute w-full h-full bg-white z-20"></View> */}
                         <View className="absolute w-full h-full z-40 justify-center items-center">
                             <Text className="text-white text-8xl font-extrabold">
                                 {city.name}
@@ -72,103 +71,39 @@ export default function AboutCity() {
                         <Skeleton
                             style={{
                                 width: "100%",
-                                height: 25,
+                                height: 100,
                                 borderRadius: 5,
                                 alignSelf: "center",
                             }}
                         />
                         <Skeleton
                             style={{
-                                width: "60%",
-                                height: 25,
+                                width: "100%",
+                                height: 100,
                                 borderRadius: 5,
                             }}
                         />
-                        <Skeleton
-                            style={{
-                                width: "80%",
-                                height: 25,
-                                borderRadius: 5,
-                            }}
-                        />
-                        <Skeleton
-                            style={{
-                                width: "90%",
-                                height: 25,
-                                borderRadius: 5,
-                            }}
-                        />
+                        
                         <Skeleton
                             style={{
                                 width: "100%",
-                                height: 25,
+                                height: 100,
                                 borderRadius: 5,
+                                alignSelf: "center",
                             }}
                         />
-                        <Skeleton
-                            style={{
-                                width: "90%",
-                                height: 25,
-                                borderRadius: 5,
-                            }}
-                        />
-                        <Skeleton
-                            style={{
-                                width: "90%",
-                                height: 25,
-                                borderRadius: 5,
-                            }}
-                        />
-                        <Skeleton
-                            style={{
-                                width: "80%",
-                                height: 25,
-                                borderRadius: 5,
-                            }}
-                        />
+                        
                         <Skeleton
                             style={{
                                 width: "100%",
-                                height: 25,
+                                height: 100,
                                 borderRadius: 5,
+                                alignSelf: "center",
                             }}
                         />
-                        <Skeleton
-                            style={{
-                                width: "90%",
-                                height: 25,
-                                borderRadius: 5,
-                            }}
-                        />
+                        
 
-                        <Skeleton
-                            style={{
-                                width: "100%",
-                                height: 25,
-                                borderRadius: 5,
-                            }}
-                        />
-                          <Skeleton
-                            style={{
-                                width: "90%",
-                                height: 25,
-                                borderRadius: 5,
-                            }}
-                        />
-                        <Skeleton
-                            style={{
-                                width: "90%",
-                                height: 25,
-                                borderRadius: 5,
-                            }}
-                        />
-                        <Skeleton
-                            style={{
-                                width: "80%",
-                                height: 25,
-                                borderRadius: 5,
-                            }}
-                        />
+               
                     </React.Fragment>
                 ) : (
                     <React.Fragment>

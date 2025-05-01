@@ -30,28 +30,27 @@ export default function SingUp() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(form),
-                method:'POST'
+                method: "POST",
             });
 
-            return router.push("/(auth)/sign-in");
+            router.push("/(auth)/sign-in");
         } catch (e: unknown) {
             if (e instanceof Response) {
                 const { errors, message } = await e.json();
                 if (e.status === 400) {
+
                     if (errors) {
                         setError(errors);
                         return;
                     }
+
                     if (message) {
+                        Alert.alert("エラー ", message, [{ text: "OK" }]);
                     }
                 }
 
                 if (e.status === 500) {
-                    Alert.alert(
-                        "エラー ",
-                        "サーバーエラー",
-                        [{ text: "OK" }]
-                    );
+                    Alert.alert("エラー ", "サーバーエラー", [{ text: "OK" }]);
                 }
             }
         } finally {
@@ -62,7 +61,7 @@ export default function SingUp() {
     return (
         <View className="flex-1">
             <View
-                className=" h-[35%] z-10 overflow-hidden"
+                className="h-[35%] z-10 overflow-hidden"
                 style={{
                     borderBottomLeftRadius: 30,
                     borderBottomRightRadius: 30,
@@ -76,7 +75,7 @@ export default function SingUp() {
             </View>
             <View className="flex-1 bg-white px-5 -mt-10 gap-5">
                 <Text className="text-3xl text-indigo-500 text-center font-bold mt-20">
-                {t("ミャウマップ")}
+                    {t("ミャウマップ")}
                 </Text>
                 <FormInput
                     editable={!isPending}
