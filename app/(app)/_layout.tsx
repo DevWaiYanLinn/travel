@@ -1,6 +1,5 @@
 import { useSession } from '@/providers/session-provider';
 import { Redirect, Stack } from 'expo-router';
-import { useMemo } from 'react';
 import { View } from 'react-native';
 
 export default function AppLayout() {

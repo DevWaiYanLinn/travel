@@ -72,15 +72,22 @@ export default function City() {
                                 <Skeleton
                                     className="rounded-lg"
                                     style={{
-                                        width: 150,
-                                        height: 20,
+                                        width: 100,
+                                        height: 15,
                                     }}
                                 />
                                 <Skeleton
                                     className="mt-3 rounded-lg"
                                     style={{
                                         width: '100%',
-                                        height: 50,
+                                        height: 70,
+                                    }}
+                                />
+                                <Skeleton
+                                    className="rounded-lg mt-3"
+                                    style={{
+                                        width: 80,
+                                        height: 30,
                                     }}
                                 />
                             </View>

@@ -69,9 +69,11 @@
     "Newest": "最新",
     "All": "すべて",
     "Filter": "フィルター",
-    "Don't you have and account? Sign Up": "アカウントなし？登録",
     "First name": "名",
     "Last name": "姓",
     "Tags": "タグ",
-    "Save": "保存"
+    "Save": "保存",
+    "See More": "もっと見る",
+    "Don't you have an account? Sign Up":"アカウントがない方はこちら",
+    "Already account?. Sign In" : "アカウントをお持ちの方はこちら"
 }

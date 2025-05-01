@@ -1,9 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { View, Text, Switch, StyleSheet, Pressable, Image } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { BottomSheetModal, BottomSheetView, BottomSheetModalProvider, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useCallback, useRef } from 'react';
+import { BottomSheetModal, BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import { useCallback, useRef } from 'react'
 import { useFocusEffect } from 'expo-router';
 
 export default function Tab() {
@@ -88,7 +87,7 @@ export default function Tab() {
                             />
                             <Text className="text-3xl text-gray-600 text-center mt-3 font-bold">{t('MeowMap')}</Text>
                         </View>
-                        <View className="bg-gray-50 flex-1 rounded-lg mt-3 p-3">
+                        <View className="flex-1 mt-3 p-3">
                             <Text className="text-gray-600">
                                 このアプリは、長崎市への深い感謝の気持ちを込めて開発しました。長崎市は、私が日本で開発者としての旅を始めるきっかけを与えてくれた特別な場所です。日本で生活できていること、そしてこれまで支えてくださった皆さんに心から感謝しています。
                             </Text>

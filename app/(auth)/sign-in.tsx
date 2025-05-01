@@ -128,7 +128,7 @@ export default function SignIn() {
                     href={"/(auth)/sign-up"}
                     className="w-full text-center text-indigo-500 text-[1.1rem] font-bold underline"
                 >
-                    {t("Don't you have and account? Sign Up")}
+                    {t("Don't you have an account? Sign Up")}
                 </Link>
             </View>
         </View>

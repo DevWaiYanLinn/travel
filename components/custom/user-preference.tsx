@@ -36,7 +36,7 @@ export const UserPreference = memo(
                 <AntDesign
                     name={preference ? "heart" : "hearto"}
                     size={16}
-                    color="red"
+                    color="#6366f1"
                 />
             </TouchableOpacity>
         );

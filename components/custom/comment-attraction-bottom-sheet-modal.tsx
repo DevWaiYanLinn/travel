@@ -117,7 +117,6 @@ export const CommentAttractionBottomSheetModal = forwardRef(
             >
                 <BottomSheetView style={styles.contentContainer} className="p-3 flex-1">
                     <View className="flex-1 w-full">
-                        <Text className="text-2xl font-bold text-gray-600 text-center">{t('Comments')}</Text>
                         <Picker
                             onValueChange={setSortType}
                             selectedValue={sortType}
