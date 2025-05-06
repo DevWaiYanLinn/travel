@@ -12,7 +12,7 @@ export default function App() {
         return <View />;
     }
 
-    if (session) {
+    if (session?.accessToken) {
         return <Redirect href={'/(app)/(tabs)'} />;
     }
 

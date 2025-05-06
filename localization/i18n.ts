@@ -11,15 +11,10 @@ const languageDetectorPlugin = {
     init: () => {},
     detect: async function (callback: (lang: string) => void) {
         try {
-            // get stored language from Async storage
-            // put your own language detection logic here
             await AsyncStorage.getItem(STORE_LANGUAGE_KEY).then((language) => {
                 if (language) {
-                    //if language was stored before, use this language in the app
                     return callback(language);
                 }
-                //if language was not stored yet, use english
-
                 return callback('jp');
             });
         } catch (error) {

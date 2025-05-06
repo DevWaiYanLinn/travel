@@ -14,7 +14,7 @@ export default function Edit() {
                 <View className="flex-row justify-center absolute bottom-0 left-[30] translate-y-[50%] z-20">
                     <View className="relative">
                         <View className="absolute bottom-2 right-[0.5] bg-blue-00 z-30 p-1 rounded-full">
-                            <Entypo name="camera" size={15} color="white" />
+                            <Entypo name="camera" size={15} color="#FFFFFF" />
                         </View>
                         <View className="border rounded-full w-20 h-20 overflow-hidden border-white bg-white">
                             <Image source={require('@/assets/images/avatar.png')} className="w-full h-full" />

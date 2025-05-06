@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Animated, RegisteredStyle, StyleSheet, ViewStyle } from 'react-native';
+import { Animated, StyleSheet, ViewStyle } from 'react-native';
 
 const styles = StyleSheet.create({
     skeleton: {

@@ -1,18 +1,18 @@
-import { ActivityIndicator, Dimensions, FlatList, View } from "react-native";
-import { Pressable, TextInput } from "react-native-gesture-handler";
-import { BottomSheetModal, SNAP_POINT_TYPE } from "@gorhom/bottom-sheet";
-import { useCallback, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import EvilIcons from "@expo/vector-icons/EvilIcons";
-import AttractionCard from "@/components/custom/attraction-card";
-import { useSession } from "@/providers/session-provider";
-import { CommentAttractionBottomSheetModal } from "@/components/custom/comment-attraction-bottom-sheet-modal";
-import { fetcher } from "@/lib/fetch";
-import { BASE_API_URL } from "@/config/constants";
-import { Skeleton } from "@/components/common/skeleton";
-import { buildQuerySting, filterParams, list } from "@/lib/utils";
-import useSWRInfinite from "swr/dist/infinite";
-import FilterAttractionBottomSheetModal from "@/components/custom/filter-attraction-bottom-sheet-modal";
+import { ActivityIndicator, Dimensions, FlatList, View } from 'react-native';
+import { Pressable, TextInput } from 'react-native-gesture-handler';
+import { BottomSheetModal, SNAP_POINT_TYPE } from '@gorhom/bottom-sheet';
+import { useCallback, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import EvilIcons from '@expo/vector-icons/EvilIcons';
+import AttractionCard from '@/components/custom/attraction-card';
+import { useSession } from '@/providers/session-provider';
+import { CommentAttractionBottomSheetModal } from '@/components/custom/comment-attraction-bottom-sheet-modal';
+import { fetcher } from '@/lib/fetch';
+import { BASE_API_URL } from '@/config/constants';
+import { Skeleton } from '@/components/common/skeleton';
+import { buildQuerySting, filterParams, list } from '@/lib/utils';
+import useSWRInfinite from 'swr/infinite';
+import FilterAttractionBottomSheetModal from '@/components/custom/filter-attraction-bottom-sheet-modal';
 
 export default function Attraction() {
     const { t } = useTranslation();
@@ -22,7 +22,7 @@ export default function Attraction() {
     const { session } = useSession();
     const [attractionId, setAttractionId] = useState<string | null>(null);
     const [params, setParams] = useState<{ [key: string]: string }>({
-        cityId: "default",
+        cityId: 'default',
     });
     const {
         data: attractions,
@@ -34,18 +34,16 @@ export default function Attraction() {
     } = useSWRInfinite(
         (index, previousPageData) => {
             if (index && !previousPageData.length) return null;
-            const paramsToString = buildQuerySting(
-                filterParams({ ...params, page: index + 1, take: 10 })
-            );
+            const paramsToString = buildQuerySting(filterParams({ ...params, page: index + 1, take: 10 }));
             return [`/attractions?${paramsToString}`, index + 1, params.cityId];
         },
         async ([key]) => {
             return fetcher(BASE_API_URL + key, {
                 headers: {
-                    Authorization: "Bearer " + session?.accessToken,
+                    Authorization: 'Bearer ' + session?.accessToken,
                 },
             });
-        },
+        }
     );
 
     const handleCommentModalPress = useCallback((id: string) => {
@@ -57,13 +55,10 @@ export default function Attraction() {
         filterSheetModalRef.current?.present();
     }, []);
 
-    const handleSheetChanges = useCallback(
-        (index: number, position: number, type: SNAP_POINT_TYPE) => {
-            if (type === 1) {
-            }
-        },
-        []
-    );
+    const handleSheetChanges = useCallback((index: number, position: number, type: SNAP_POINT_TYPE) => {
+        if (type === 1) {
+        }
+    }, []);
 
     const handleFilterPress = useCallback(
         (params: any) => {
@@ -85,22 +80,17 @@ export default function Attraction() {
                     <View
                         style={{
                             borderRadius: 10,
-                            backgroundColor: "rgba(255, 255, 255, 0.6)",
+                            backgroundColor: 'rgba(255, 255, 255, 0.6)',
                         }}
                         className="h-14 flex flex-row justify-between items-center"
                     >
                         <TextInput
                             editable={false}
                             pointerEvents="none"
-                            placeholder={t("Search your favorite city...")}
+                            placeholder={t('Search your favorite city...')}
                             className="flex-1 rounded-md px-4 py-3"
                         />
-                        <EvilIcons
-                            name="search"
-                            size={30}
-                            color="#6b7280"
-                            className="mx-2"
-                        />
+                        <EvilIcons name="search" size={30} color="#6b7280" className="mx-2" />
                     </View>
                 </Pressable>
             </View>
@@ -111,16 +101,14 @@ export default function Attraction() {
                             key={i}
                             className="flex-row gap-2 p-3 rounded-lg"
                             style={{
-                                backgroundColor: "rgba(255, 255, 255, 0.6)",
+                                backgroundColor: 'rgba(255, 255, 255, 0.6)',
                             }}
                         >
                             <Skeleton
                                 className="rounded-lg"
                                 style={{
-                                    width:
-                                        Dimensions.get("window").width * 0.35,
-                                    height:
-                                        Dimensions.get("window").width * 0.35,
+                                    width: Dimensions.get('window').width * 0.35,
+                                    height: Dimensions.get('window').width * 0.35,
                                 }}
                             />
                             <View />
@@ -156,14 +144,8 @@ export default function Attraction() {
                                     />
                                 </View>
                                 <View className="flex-row justify-end  gap-3 mt-5 ">
-                                    <Skeleton
-                                        className="rounded-lg"
-                                        style={{ width: 30, height: 10 }}
-                                    />
-                                    <Skeleton
-                                        className="rounded-lg"
-                                        style={{ width: 30, height: 10 }}
-                                    />
+                                    <Skeleton className="rounded-lg" style={{ width: 30, height: 10 }} />
+                                    <Skeleton className="rounded-lg" style={{ width: 30, height: 10 }} />
                                 </View>
                             </View>
                         </View>
@@ -175,16 +157,12 @@ export default function Attraction() {
                     initialScrollIndex={0}
                     showsVerticalScrollIndicator={false}
                     onEndReached={() => {
-                        const isReachingEnd =
-                            attractions &&
-                            attractions[attractions.length - 1].length < 10;
+                        const isReachingEnd = attractions && attractions[attractions.length - 1].length < 10;
                         if (!isReachingEnd) {
                             setSize(size + 1);
                         }
                     }}
-                    ListFooterComponent={
-                        isLoading || isValidating ? <ActivityIndicator /> : null
-                    }
+                    ListFooterComponent={isLoading || isValidating ? <ActivityIndicator /> : null}
                     windowSize={5}
                     data={attractions.flatMap((a) => a)}
                     keyExtractor={(item) => item.id}
@@ -205,10 +183,7 @@ export default function Attraction() {
                     contentContainerStyle={{ gap: 10, paddingHorizontal: 10 }}
                 />
             )}
-            <FilterAttractionBottomSheetModal
-                ref={filterSheetModalRef}
-                handleFilterPress={handleFilterPress}
-            />
+            <FilterAttractionBottomSheetModal ref={filterSheetModalRef} handleFilterPress={handleFilterPress} />
             <CommentAttractionBottomSheetModal
                 attractionId={attractionId}
                 ref={commentSheetModalRef}

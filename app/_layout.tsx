@@ -5,8 +5,9 @@ import 'react-native-reanimated';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 import '@/localization/i18n';
-import { BackHandler } from 'react-native';
+import { BackHandler, NativeEventSubscription } from 'react-native';
 import { SessionProvider } from '@/providers/session-provider';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Slot } from 'expo-router';
 import { SWRConfig } from 'swr';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
@@ -18,14 +19,18 @@ export default function RootLayout() {
     useFocusEffect(
         useCallback(() => {
             const onBackPress = () => {
+                // Prevent back navigation
                 return true;
             };
 
-            BackHandler.addEventListener('hardwareBackPress', onBackPress);
+            // ✅ Returns a NativeEventSubscription, not BackHandlerStatic
+            const subscription: NativeEventSubscription = BackHandler.addEventListener(
+                'hardwareBackPress',
+                onBackPress
+            );
 
-            return () => {
-                BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-            };
+            // ✅ Remove listener correctly
+            return () => subscription.remove();
         }, [])
     );
 
@@ -44,18 +49,20 @@ export default function RootLayout() {
     }
 
     return (
-        <SessionProvider>
-            <SWRConfig
-                value={{
-                    provider: () => new Map(),
-                }}
-            >
-                <GestureHandlerRootView>
-                    <BottomSheetModalProvider>
-                        <Slot />
-                    </BottomSheetModalProvider>
-                </GestureHandlerRootView>
-            </SWRConfig>
-        </SessionProvider>
+        <SafeAreaView style={{ flex: 1 }}>
+            <SessionProvider>
+                <SWRConfig
+                    value={{
+                        provider: () => new Map(),
+                    }}
+                >
+                    <GestureHandlerRootView>
+                        <BottomSheetModalProvider>
+                            <Slot />
+                        </BottomSheetModalProvider>
+                    </GestureHandlerRootView>
+                </SWRConfig>
+            </SessionProvider>
+        </SafeAreaView>
     );
 }

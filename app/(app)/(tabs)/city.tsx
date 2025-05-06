@@ -104,7 +104,15 @@ export default function City() {
                     keyExtractor={(item) => item.id}
                     data={cities}
                     renderItem={({ item }) => {
-                        return <CityCard id={item.id} preference={!!item.preferences.length} name={item.name} about={item.about} source={{ uri: item.images[0].url }} />;
+                        return (
+                            <CityCard
+                                id={item.id}
+                                preference={!!item.preferences.length}
+                                name={item.name}
+                                about={item.about}
+                                source={{ uri: item.images[0].url }}
+                            />
+                        );
                     }}
                 />
             )}

@@ -15,13 +15,17 @@ export const TAB_BAR_OPTIONS: BottomTabNavigationOptions = {
         marginHorizontal: 10,
         backgroundColor: 'rgba(255, 255, 255, 0.6)',
         overflow: 'hidden',
+        borderWidth: 0,
     },
     tabBarIconStyle: {
         height: '100%',
         width: '100%',
+        borderWidth: 0,
     },
     tabBarShowLabel: false,
     tabBarItemStyle: {
         backgroundColor: 'rgba(255, 255, 255, 0.6)',
+        height: 55,
+        borderWidth: 0,
     },
 };

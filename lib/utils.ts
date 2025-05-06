@@ -1,3 +1,6 @@
+import dayjs from 'dayjs';
+import 'dayjs/locale/ja';
+
 export const delay = (n: number) => {
     return new Promise((resolve) => {
         setTimeout(resolve, n);
@@ -14,3 +17,5 @@ export const filterParams = (obj: Object) =>
     );
 
 export const buildQuerySting = (obj: any) => new URLSearchParams(obj).toString();
+
+export const cdayjs = dayjs;
